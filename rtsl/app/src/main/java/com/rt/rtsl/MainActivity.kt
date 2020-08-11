@@ -1,7 +1,8 @@
-package com.rtsl.app.android
+package com.rt.rtsl
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.rtsl.app.android.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
