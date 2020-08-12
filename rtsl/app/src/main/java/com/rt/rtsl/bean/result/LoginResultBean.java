@@ -1,4 +1,4 @@
-package com.rt.rtsl.bean;
+package com.rt.rtsl.bean.result;
 
 public class LoginResultBean extends BaseResultBean<LoginResultBean.LoginResult>{
 

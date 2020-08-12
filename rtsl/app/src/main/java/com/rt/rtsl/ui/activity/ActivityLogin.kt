@@ -13,7 +13,7 @@ import com.rt.rtsl.utils.PermissionPageUtils
 import com.rt.rtsl.utils.ToastUtil
 import com.rt.rtsl.utils.Utility
 import com.rt.rtsl.utils.logd
-import com.rt.rtsl.vm.LoginType
+import com.rt.rtsl.bean.request.LoginType
 import com.rt.rtsl.vm.LoginViewModel
 import com.rtsl.app.android.R
 import com.rtsl.app.android.databinding.ActivityLoginBinding
@@ -75,6 +75,7 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>() {
                 ToastUtil.show(it.context,"请输入验证码")
                 return@setOnClickListener
             }
+            phone=contentBinding.smsCodeLogin.phoneInput.text.toString();
             var verCode=contentBinding.smsCodeLogin.smsCodeInput.text.toString()
             loginViewModel.login(loginType,phone,verKey,verCode,weChatId,alipayId)
         }

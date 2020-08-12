@@ -1,4 +1,4 @@
-package com.rt.rtsl.bean;
+package com.rt.rtsl.bean.result;
 
 public class BaseResultBean<T> {
     //code	string	大于0表示正常
@@ -7,6 +7,6 @@ public class BaseResultBean<T> {
     public T data;
 
     public boolean yes() {
-        return code>0;
+        return code>=0;
     }
 }
