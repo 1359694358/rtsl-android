@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="dimen185">185dp</dimen>
+    <dimen name="dimen18">18dp</dimen>
+    <dimen name="dimen44">44dp</dimen>
+    <dimen name="dimen40">40dp</dimen>
 </resources>
