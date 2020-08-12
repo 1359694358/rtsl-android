@@ -37,6 +37,12 @@
             android:name="com.rt.rtsl.ui.activity.ActivityLogin"
             android:configChanges="locale|layoutDirection|orientation|keyboardHidden|navigation|screenSize"
             />
+
+        <service
+            android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
+            android:label="dexopt"
+            android:process=":dexopt" >
+        </service>
     </application>
 
 </manifest>
