@@ -53,6 +53,10 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.core.content.PermissionChecker;
 import androidx.core.graphics.drawable.DrawableCompat;
+
+import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
+import android.telephony.TelephonyManager;
 import android.text.Layout;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -812,5 +816,33 @@ public class Utility {
         Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         intent.setData(Uri.fromFile(new File(filePath)));
         context.sendBroadcast(intent);
+    }
+
+    public static String getPhoneNumber(Context context)
+    {
+        String phoneNumber="";
+        TelephonyManager phoneMgr = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
+        SubscriptionManager subscriptionManager=SubscriptionManager.from(context);
+        try {
+            phoneNumber=phoneMgr.getLine1Number();
+            List<SubscriptionInfo> list=subscriptionManager.getActiveSubscriptionInfoList();
+            if(list!=null)
+            {
+                for (SubscriptionInfo item:list)
+                {
+                    String  number=item.getNumber();
+                    if(TextUtils.isEmpty(phoneNumber)&&!TextUtils.isEmpty(number))
+                    {
+                        phoneNumber=number;
+                        break;
+                    }
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return phoneNumber;
     }
 }
