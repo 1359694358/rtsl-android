@@ -31,6 +31,7 @@
             />
 
         <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+            android:id="@+id/loginButton"
             app:layout_constraintTop_toBottomOf="@+id/phoneNumber"
             android:layout_marginTop="@dimen/dimen32"
             app:qmui_backgroundColor="#E91C37"
@@ -45,5 +46,28 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen44"/>
+
+        <TextView
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/loginButton"
+            android:paddingTop="@dimen/dimen18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="切换手机号"
+            android:textColor="#ff344047"
+            android:textSize="@dimen/dimen14"
+            />
+
+        <include
+            android:layout_marginBottom="@dimen/dimen48"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/login_bottom_layout"/>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

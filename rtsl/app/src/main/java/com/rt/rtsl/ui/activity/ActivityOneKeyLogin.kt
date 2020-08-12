@@ -66,6 +66,12 @@ class ActivityOneKeyLogin: BaseActivity<ActivityOnekeyloginBinding>() {
                     {
                         ToastUtil.show(this,"获取手机号失败，请切换手机号登录")
                     }
+                    else
+                    {
+                        contentBinding.loginButton.setOnClickListener {
+
+                        }
+                    }
                 }
                 else
                 {
