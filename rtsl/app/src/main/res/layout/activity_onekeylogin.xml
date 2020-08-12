@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
     </data>
@@ -7,5 +8,43 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <include android:id="@+id/toolbarBindingView" layout="@layout/app_toolbar"/>
+        <ImageView
+            android:id="@+id/appLogo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbarBindingView"
+            android:src="@mipmap/launcher_icon"
+            android:layout_marginTop="@dimen/dimen56"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+<!--        ffe91c37-->
+        <TextView
+            android:id="@+id/phoneNumber"
+            app:layout_constraintTop_toBottomOf="@+id/appLogo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="158****9256"
+            android:textColor="#ff344047"
+            android:layout_marginTop="@dimen/dimen73"
+            android:textSize="@dimen/dimen20"
+            />
+
+        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+            app:layout_constraintTop_toBottomOf="@+id/phoneNumber"
+            android:layout_marginTop="@dimen/dimen32"
+            app:qmui_backgroundColor="#E91C37"
+            app:qmui_radius="@dimen/dimen22"
+            android:layout_marginStart="@dimen/dimen27"
+            android:layout_marginEnd="@dimen/dimen27"
+            android:text="一键登录"
+            android:textSize="@dimen/dimen18"
+            android:textColor="@android:color/white"
+            app:qmui_borderColor="@android:color/transparent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen44"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
