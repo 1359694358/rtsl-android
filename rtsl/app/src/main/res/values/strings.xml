@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">润泰丝路</string>
+
+<!--  微信 支付宝配置 -->
+    <string name="share_platform_weixinid">wx5feb0871315cb369</string>
+    <string name="share_platform_weixinkey">9df7d2e1a8673a990c29a7cef7a1b086</string>
+    <string name="share_platform_alipayid">wx5feb0871315cb369</string>
+    <string name="share_platform_alipaykey">9df7d2e1a8673a990c29a7cef7a1b086</string>
 </resources>
