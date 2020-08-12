@@ -106,6 +106,11 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>() {
         })
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        killProcess()
+    }
+
     fun requestReadPhoneNumberPermission()
     {
         PermissionX.init(this).permissions(Manifest.permission.READ_PHONE_STATE)

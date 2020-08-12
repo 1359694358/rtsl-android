@@ -17,7 +17,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         super.onCreate(savedInstanceState)
         requestSDCardPermission()
     }
-
+    override fun onBackPressed() {
+        super.onBackPressed()
+        killProcess()
+    }
     fun requestSDCardPermission()
     {
         PermissionX.init(this)
