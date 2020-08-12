@@ -23,15 +23,90 @@
             android:textSize="@dimen/dimen26" />
 
         <EditText
+            android:id="@+id/phoneInput"
             android:digits="0123456789"
             android:maxLength="11"
+            android:hint="请输入手机号"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/dimen14"
+            android:textColorHint="#ff969c9e"
+            android:background="@android:color/transparent"
             app:layout_constraintTop_toBottomOf="@+id/topTitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="@dimen/dimen48"
             android:layout_marginStart="@dimen/dimen38"
             android:layout_marginEnd="@dimen/dimen38"
+            android:paddingBottom="@dimen/dimen15"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <View
+            android:id="@+id/phoneInputLine"
+            app:layout_constraintStart_toStartOf="@+id/phoneInput"
+            app:layout_constraintEnd_toEndOf="@+id/phoneInput"
+            app:layout_constraintTop_toBottomOf="@+id/phoneInput"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:background="#E5E5E5"/>
+
+        <EditText
+            app:layout_constraintEnd_toStartOf="@+id/getSmsCode"
+            android:id="@+id/smsCodeInput"
+            android:digits="0123456789"
+            android:maxLength="8"
+            android:hint="短信验证码"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/dimen14"
+            android:textColorHint="#ff969c9e"
+            android:background="@android:color/transparent"
+            app:layout_constraintTop_toBottomOf="@+id/phoneInputLine"
+            app:layout_constraintStart_toStartOf="parent"
+            android:paddingTop="@dimen/dimen17"
+            android:layout_marginStart="@dimen/dimen38"
+            android:layout_marginEnd="@dimen/dimen38"
+            android:paddingBottom="@dimen/dimen15"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:id="@+id/smsCodeInputLine"
+            app:layout_constraintStart_toStartOf="@+id/phoneInput"
+            app:layout_constraintEnd_toEndOf="@+id/phoneInput"
+            app:layout_constraintTop_toBottomOf="@+id/smsCodeInput"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:background="#E5E5E5"/>
+
+        <TextView
+            app:layout_constraintTop_toTopOf="@+id/smsCodeInput"
+            app:layout_constraintBottom_toBottomOf="@+id/smsCodeInput"
+            android:id="@+id/getSmsCode"
+            app:layout_constraintEnd_toEndOf="@+id/phoneInput"
+            android:layout_width="80dp"
+            android:gravity="center"
+            android:layout_height="0dp"
+            android:text="获取验证码"
+            android:textColor="#ffe91c37"
+            android:textSize="@dimen/dimen16"
+            />
+
+
+        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+            android:id="@+id/loginButton"
+            app:layout_constraintTop_toBottomOf="@+id/smsCodeInputLine"
+            android:layout_marginTop="@dimen/dimen31"
+            app:qmui_backgroundColor="#E91C37"
+            app:qmui_radius="@dimen/dimen22"
+            android:layout_marginStart="@dimen/dimen27"
+            android:layout_marginEnd="@dimen/dimen27"
+            android:text="一键登录"
+            android:textSize="@dimen/dimen18"
+            android:textColor="@android:color/white"
+            app:qmui_borderColor="@android:color/transparent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen44" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
