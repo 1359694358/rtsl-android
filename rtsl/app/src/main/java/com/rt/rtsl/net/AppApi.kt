@@ -5,11 +5,19 @@ import io.reactivex.plugins.RxJavaPlugins
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.POST
 import java.util.concurrent.TimeUnit
 import javax.net.ssl.X509TrustManager
+import io.reactivex.Observable
+import org.json.JSONObject
 
 interface ServerApi
 {
+    @POST("api/ap_user/sendSms")
+    @FormUrlEncoded
+    fun getSmsCode(@Field("phoneNumber")phoneNumber:String):Observable<JSONObject>
 
 }
 
@@ -17,7 +25,7 @@ object AppApi
 {
     var ReadTimeOut = 5L
     var ConnectTimeOut = 5L
-    val Host="https://"
+    val Host="http://www.huimiao.wang"
     val serverApi:ServerApi
     init {
         RxJavaPlugins.setErrorHandler { throwable ->

@@ -1,11 +1,18 @@
 package com.rt.rtsl.ui.activity
 
+import android.content.Context
 import android.os.Bundle
+import android.os.Process
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelStore
+import androidx.lifecycle.ViewModelStoreOwner
 import com.rt.rtsl.utils.StatusBarUtil
 import com.rtsl.app.android.R
 import com.rtsl.app.android.databinding.AppToolbarBinding
@@ -24,8 +31,16 @@ abstract class BaseActivity<T: ViewDataBinding>: AppCompatActivity()
         if(toolbarBindingView!=null)
         {
             toolbarBinding=DataBindingUtil.findBinding(toolbarBindingView)
-            toolbarBinding?.backBtn?.setOnClickListener { finish() }
+            toolbarBinding?.backBtn?.setOnClickListener {
+                backHandle()
+                finish()
+            }
         }
+    }
+
+    protected open fun backHandle()
+    {
+
     }
 
     fun setTitle(title:String)
@@ -48,4 +63,27 @@ abstract class BaseActivity<T: ViewDataBinding>: AppCompatActivity()
         StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.statusbar_color),0)
     }
     abstract fun getLayoutResId():Int
+
+    protected fun <T: ViewModel> getViewModel(modelClazz:Class<T>):T
+    {
+        return ViewModelProviders.of(this).get(modelClazz)
+    }
+
+    override fun finish() {
+        hideKeyBroad()
+        super.finish()
+    }
+    protected fun hideKeyBroad()
+    {
+        val v = window.peekDecorView()
+        if (v != null && v.windowToken != null) {
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(v.windowToken, 0)
+        }
+    }
+
+    protected final fun killProcess()
+    {
+        Process.killProcess(Process.myPid())
+    }
 }

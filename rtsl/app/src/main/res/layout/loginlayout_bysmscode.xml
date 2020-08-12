@@ -86,7 +86,7 @@
             android:layout_width="80dp"
             android:gravity="center"
             android:layout_height="0dp"
-            android:text="获取验证码"
+            android:text="@string/getvalidatenum"
             android:textColor="#ffe91c37"
             android:textSize="@dimen/dimen16"
             />

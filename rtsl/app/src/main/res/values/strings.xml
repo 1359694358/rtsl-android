@@ -7,4 +7,6 @@
     <string name="share_platform_alipayid">wx5feb0871315cb369</string>
     <string name="share_platform_alipaykey">9df7d2e1a8673a990c29a7cef7a1b086</string>
     <string name="normaltitle">润泰丝路会员店</string>
+    <string name="reget">s后重取</string>
+    <string name="getvalidatenum">获取验证码</string>
 </resources>
