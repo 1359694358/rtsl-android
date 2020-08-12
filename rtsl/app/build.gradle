@@ -45,7 +45,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:5.4.0'
     implementation 'com.qmuiteam:qmui:2.0.0-alpha10'
-
+    implementation 'com.tencent.tbs.tbssdk:sdk:43903'
     //权限
     implementation 'com.permissionx.guolindev:permissionx:1.3.0'
     testImplementation 'junit:junit:4.+'

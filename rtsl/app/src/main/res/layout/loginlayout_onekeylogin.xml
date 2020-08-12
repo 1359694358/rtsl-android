@@ -3,21 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <include android:id="@+id/toolbarBindingView" layout="@layout/app_toolbar"/>
+        android:layout_height="wrap_content">
+
         <ImageView
             android:id="@+id/appLogo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbarBindingView"
+            app:layout_constraintTop_toTopOf="parent"
             android:src="@mipmap/launcher_icon"
             android:layout_marginTop="@dimen/dimen56"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-<!--        ffe91c37-->
+            android:layout_height="wrap_content" />
+        <!--        ffe91c37-->
         <TextView
             android:id="@+id/phoneNumber"
             app:layout_constraintTop_toBottomOf="@+id/appLogo"
@@ -27,8 +29,7 @@
             android:layout_height="wrap_content"
             android:textColor="#ff344047"
             android:layout_marginTop="@dimen/dimen73"
-            android:textSize="@dimen/dimen20"
-            />
+            android:textSize="@dimen/dimen20" />
 
         <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
             android:id="@+id/loginButton"
@@ -45,9 +46,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen44"/>
+            android:layout_height="@dimen/dimen44" />
 
         <TextView
+            android:id="@+id/loginSmsLayoutSwitch"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/loginButton"
@@ -56,18 +58,7 @@
             android:layout_height="wrap_content"
             android:text="切换手机号"
             android:textColor="#ff344047"
-            android:textSize="@dimen/dimen14"
-            />
-
-        <include
-            android:layout_marginBottom="@dimen/dimen48"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            layout="@layout/login_bottom_layout"/>
-
+            android:textSize="@dimen/dimen14" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

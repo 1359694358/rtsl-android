@@ -23,4 +23,6 @@
     <dimen name="dimen48">48dp</dimen>
     <dimen name="dimen151">151dp</dimen>
     <dimen name="dimen42">42dp</dimen>
+    <dimen name="dimen26">26dp</dimen>
+    <dimen name="dimen38">38dp</dimen>
 </resources>

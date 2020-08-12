@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/topTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="@dimen/dimen38"
+            android:layout_marginTop="@dimen/dimen42"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hi～\n欢迎来到润泰丝路"
+            android:textColor="#ff344047"
+            android:textSize="@dimen/dimen26" />
+
+        <EditText
+            android:digits="0123456789"
+            android:maxLength="11"
+            app:layout_constraintTop_toBottomOf="@+id/topTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/dimen48"
+            android:layout_marginStart="@dimen/dimen38"
+            android:layout_marginEnd="@dimen/dimen38"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

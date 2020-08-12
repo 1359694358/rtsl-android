@@ -3,6 +3,7 @@ package com.rt.rtsl.ui.activity
 import android.Manifest
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.View
 import android.view.ViewGroup
 import com.permissionx.guolindev.PermissionX
 import com.permissionx.guolindev.callback.ExplainReasonCallback
@@ -13,12 +14,12 @@ import com.rt.rtsl.utils.ToastUtil
 import com.rt.rtsl.utils.Utility
 import com.rt.rtsl.utils.logd
 import com.rtsl.app.android.R
-import com.rtsl.app.android.databinding.ActivityOnekeyloginBinding
+import com.rtsl.app.android.databinding.ActivityLoginBinding
 import com.rtsl.app.android.databinding.SimpleDialogBinding
 
-class ActivityOneKeyLogin: BaseActivity<ActivityOnekeyloginBinding>() {
+class ActivityLogin: BaseActivity<ActivityLoginBinding>() {
     override fun getLayoutResId(): Int {
-        return R.layout.activity_onekeylogin
+        return R.layout.activity_login
     }
 
     override fun onCreate(savedInstanceState: Bundle?)
@@ -26,6 +27,10 @@ class ActivityOneKeyLogin: BaseActivity<ActivityOnekeyloginBinding>() {
         super.onCreate(savedInstanceState)
         setTitle(R.string.normaltitle)
         requestReadPhoneNumberPermission()
+        contentBinding.oneKeyLogin.loginSmsLayoutSwitch.setOnClickListener {
+            contentBinding.oneKeyLogin.root.visibility= View.GONE
+            contentBinding.smsCodeLogin.root.visibility=View.VISIBLE
+        }
     }
 
     fun requestReadPhoneNumberPermission()
@@ -61,21 +66,21 @@ class ActivityOneKeyLogin: BaseActivity<ActivityOnekeyloginBinding>() {
                 if(allGranted)
                 {
                     var phone=Utility.getPhoneNumber(this)
-                    contentBinding.phoneNumber.text=phone
+                    contentBinding.oneKeyLogin.phoneNumber.text=phone
                     if(TextUtils.isEmpty(phone))
                     {
                         ToastUtil.show(this,"获取手机号失败，请切换手机号登录")
                     }
                     else
                     {
-                        contentBinding.loginButton.setOnClickListener {
+                        contentBinding.oneKeyLogin.loginButton.setOnClickListener {
 
                         }
                     }
                 }
                 else
                 {
-                    contentBinding.phoneNumber.text=""
+                    contentBinding.oneKeyLogin.phoneNumber.text=""
                 }
             }
     }
