@@ -9,4 +9,6 @@
     <string name="normaltitle">润泰丝路会员店</string>
     <string name="reget">s后重取</string>
     <string name="getvalidatenum">获取验证码</string>
+    <string name="use_terms">用户使用条款.docx</string>
+    <string name="app_policy">润泰丝路隐私政策.docx</string>
 </resources>
