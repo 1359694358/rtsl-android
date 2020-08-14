@@ -9,11 +9,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import com.permissionx.guolindev.PermissionX
 import com.rt.rtsl.ui.widget.*
-import com.rt.rtsl.utils.PermissionPageUtils
-import com.rt.rtsl.utils.ToastUtil
-import com.rt.rtsl.utils.Utility
-import com.rt.rtsl.utils.logd
 import com.rt.rtsl.bean.request.LoginType
+import com.rt.rtsl.utils.*
 import com.rt.rtsl.vm.LoginViewModel
 import com.rtsl.app.android.R
 import com.rtsl.app.android.databinding.ActivityLoginBinding
@@ -104,6 +101,18 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>() {
                 resetGetInvalidataBtn()
             }
         })
+
+        contentBinding.bottomLayout.gov2.setOnClickListener {
+            var use_terms=resources.getString(R.string.use_terms)
+            var path="${FileUtil.CACHE}${use_terms}"
+            OfficeFileViewActivity.startActivity(it.context,path)
+        }
+
+        contentBinding.bottomLayout.gov4.setOnClickListener {
+            var app_policy=resources.getString(R.string.app_policy)
+            var path="${FileUtil.CACHE}${app_policy}"
+            OfficeFileViewActivity.startActivity(it.context,path)
+        }
     }
 
     override fun onBackPressed() {

@@ -4,6 +4,7 @@ import android.Manifest
 import android.os.Bundle
 import android.view.ViewGroup
 import com.permissionx.guolindev.PermissionX
+import com.rt.rtsl.App
 import com.rt.rtsl.ui.widget.*
 import com.rt.rtsl.utils.PermissionPageUtils
 import com.rt.rtsl.utils.ToastUtil
@@ -51,6 +52,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             .request { allGranted, _, _ ->
                 if(allGranted)
                 {
+                    App.initFile(this)
                     startLoginActivity()
                 }
             }

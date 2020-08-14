@@ -30,7 +30,8 @@ object AppApi
 {
     var ReadTimeOut = 5L
     var ConnectTimeOut = 5L
-    val Host="http://www.huimiao.wang"
+    //服务器接口地址修改就改这
+    val Host="http://112.74.96.214:9001"
     val serverApi:ServerApi
     init {
         RxJavaPlugins.setErrorHandler { throwable ->
