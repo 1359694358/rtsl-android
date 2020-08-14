@@ -2,6 +2,7 @@ package com.rt.rtsl.net
 
 import com.rt.rtsl.bean.request.LoginEntity
 import com.rt.rtsl.bean.request.SmsCodeEntity
+import com.rt.rtsl.bean.request.YouZanSysEntity
 import com.rt.rtsl.utils.ExceptionHandler
 import io.reactivex.plugins.RxJavaPlugins
 import okhttp3.OkHttpClient
@@ -26,7 +27,7 @@ interface ServerApi
     fun login(@Body loginEntity: LoginEntity):Observable<JSONObject>
 
     @POST("api/ap_user/yzLogin")
-    fun sysYouZanUser():Observable<JSONObject>
+    fun sysYouZanUser(@Body youZanSysEntity: YouZanSysEntity):Observable<JSONObject>
 }
 
 object AppApi
@@ -34,7 +35,7 @@ object AppApi
     var ReadTimeOut = 5L
     var ConnectTimeOut = 5L
     //服务器接口地址修改就改这
-    val Host="http://112.74.96.214:9001"
+    val Host="https://m.runtae.com"
     val serverApi:ServerApi
     init {
         RxJavaPlugins.setErrorHandler { throwable ->

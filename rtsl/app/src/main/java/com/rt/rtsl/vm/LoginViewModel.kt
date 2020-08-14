@@ -5,8 +5,11 @@ import androidx.lifecycle.ViewModel
 import com.rt.rtsl.bean.request.LoginEntity
 import com.rt.rtsl.bean.request.LoginType
 import com.rt.rtsl.bean.request.SmsCodeEntity
+import com.rt.rtsl.bean.request.YouZanSysEntity
+import com.rt.rtsl.bean.result.BaseResultBean
 import com.rt.rtsl.bean.result.LoginResultBean
 import com.rt.rtsl.bean.result.SmsCodeBean
+import com.rt.rtsl.bean.result.YouZanTokenBean
 import com.rt.rtsl.net.AppApi
 import com.rt.rtsl.net.TransUtils
 
@@ -15,6 +18,7 @@ class LoginViewModel: ViewModel()
 
     val smsCodeObserver=MutableLiveData<SmsCodeBean?>()
     val loginObserver=MutableLiveData<LoginResultBean?>()
+    val youzanTokenObserver=MutableLiveData<YouZanTokenBean?>()
     fun getSmsCode(phone: String)
     {
         var smsCodeEntity= SmsCodeEntity(phone)
@@ -48,6 +52,22 @@ class LoginViewModel: ViewModel()
                 ,
                 {
                     loginObserver.postValue(null)
+                }
+            )
+    }
+
+    fun getYouZanToken(userId:String,youzanClientId:String)
+    {
+        val youzEntity= YouZanSysEntity(userId,youzanClientId)
+        AppApi.serverApi.sysYouZanUser(youzEntity).compose(TransUtils.jsonTransform(YouZanTokenBean::class.java))
+            .compose(TransUtils.schedulersTransformer())
+            .subscribe(
+                {
+                    youzanTokenObserver.postValue(it)
+                }
+                ,
+                {
+                    youzanTokenObserver.postValue(null)
                 }
             )
     }

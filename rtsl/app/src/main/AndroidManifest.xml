@@ -22,6 +22,7 @@
         android:smallScreens="true"
         android:xlargeScreens="true" /> <!-- Required -->
     <application
+        android:hardwareAccelerated="true"
         android:requestLegacyExternalStorage="true"
         android:name="com.rt.rtsl.App"
         android:allowBackup="true"
@@ -56,6 +57,7 @@
             android:screenOrientation="portrait"
             android:name="com.rt.rtsl.ui.activity.ActivityLogin"
             android:configChanges="locale|layoutDirection|orientation|keyboardHidden|navigation|screenSize"
+            android:windowSoftInputMode="stateVisible"
             />
 
         <activity

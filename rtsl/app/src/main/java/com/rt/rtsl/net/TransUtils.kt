@@ -1,6 +1,7 @@
 package com.rt.rtsl.net;
 
 
+import android.util.Log
 import com.google.gson.Gson
 import org.json.JSONObject
 
@@ -16,6 +17,7 @@ object TransUtils {
     fun <T> jsonTransform(classRef: Class<T>): ObservableTransformer<JSONObject, T> {
         return ObservableTransformer { upstream ->
             upstream.map { s ->
+                Log.w("App","$s")
                 gson.fromJson("$s",classRef)
             }
         }

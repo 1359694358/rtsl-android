@@ -33,14 +33,13 @@ abstract class BaseActivity<T: ViewDataBinding>: AppCompatActivity()
             toolbarBinding=DataBindingUtil.findBinding(toolbarBindingView)
             toolbarBinding?.backBtn?.setOnClickListener {
                 backHandle()
-                finish()
             }
         }
     }
 
     protected open fun backHandle()
     {
-
+        finish()
     }
 
     fun setTitle(title:String)
@@ -64,7 +63,7 @@ abstract class BaseActivity<T: ViewDataBinding>: AppCompatActivity()
     }
     abstract fun getLayoutResId():Int
 
-    protected fun <T: ViewModel> getViewModel(modelClazz:Class<T>):T
+    protected fun <T: ViewModel> getViewModel(modelClazz:Class<T>): T
     {
         return ViewModelProviders.of(this).get(modelClazz)
     }
@@ -82,6 +81,11 @@ abstract class BaseActivity<T: ViewDataBinding>: AppCompatActivity()
         }
     }
 
+    protected fun showKeyBroad(view:View)
+    {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(view,0)
+    }
     protected final fun killProcess()
     {
         Process.killProcess(Process.myPid())

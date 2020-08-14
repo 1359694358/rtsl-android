@@ -118,6 +118,7 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>() {
             var path="${FileUtil.CACHE}${app_policy}"
             OfficeFileViewActivity.startActivity(it.context,path,contentBinding.bottomLayout.gov4.text.toString())
         }
+        contentBinding.smsCodeLogin.phoneInput.requestFocus()
     }
 
     override fun onBackPressed() {
