@@ -63,6 +63,11 @@
             android:configChanges="locale|layoutDirection|orientation|keyboardHidden|navigation|screenSize"
             />
 
+        <activity
+            android:name="com.rt.rtsl.ui.activity.WebViewActivity"
+            android:configChanges="locale|layoutDirection|orientation|keyboardHidden|navigation|screenSize"
+            />
+
         <service
             android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
             android:label="dexopt"

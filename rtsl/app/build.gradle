@@ -59,7 +59,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     implementation 'com.tencent:mmkv:+'
-    implementation ('com.youzanyun.open.mobile:x5sdk:+',{
+    implementation ('com.youzanyun.open.mobile:x5sdk:6.4.35',{
         exclude module: 'x5official'
     })
     //权限

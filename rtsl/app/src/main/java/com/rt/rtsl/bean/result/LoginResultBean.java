@@ -2,6 +2,9 @@ package com.rt.rtsl.bean.result;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
+
+import com.rt.rtsl.utils.UtilsKt;
 
 public class LoginResultBean extends BaseResultBean<LoginResultBean.LoginResult>{
 
@@ -19,6 +22,32 @@ public class LoginResultBean extends BaseResultBean<LoginResultBean.LoginResult>
 //        "verCode": "970601"
     public static class LoginResult implements Parcelable
     {
+        public static final String UserInfo="UserInfo";
+
+        private static LoginResult loginResult;
+        public static LoginResult getLoginResult()
+        {
+            synchronized (LoginResult.class)
+            {
+                if(loginResult==null)
+                {
+                    loginResult=UtilsKt.getCacheData(UserInfo,LoginResult.class);
+                    if(loginResult==null)
+                        loginResult=new LoginResult();
+                }
+                return loginResult;
+            }
+        }
+
+        public static void setLoginResult(LoginResult value)
+        {
+            synchronized (LoginResult.class)
+            {
+                loginResult=value;
+                UtilsKt.saveData(UserInfo,value);
+            }
+        }
+
         public String id;
         public String userId;
         public String telephone;
@@ -31,6 +60,11 @@ public class LoginResultBean extends BaseResultBean<LoginResultBean.LoginResult>
         public String accessToken;
         public String verKey;
         public String verCode;
+
+        public final boolean isLogin()
+        {
+            return !TextUtils.isEmpty(id);
+        }
 
         public LoginResult(){}
         protected LoginResult(Parcel in) {

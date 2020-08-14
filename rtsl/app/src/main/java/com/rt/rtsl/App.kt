@@ -6,6 +6,7 @@ import com.rt.rtsl.utils.AssetsManager
 import com.rt.rtsl.utils.ExceptionHandler
 import com.rt.rtsl.utils.FileUtil
 import com.rtsl.app.android.R
+import com.tencent.mmkv.MMKV
 import com.youzan.androidsdk.YouzanSDK
 import com.youzan.androidsdkx5.YouZanSDKX5Adapter
 import com.youzan.androidsdkx5.YouzanPreloader
@@ -17,6 +18,7 @@ class App: MultiDexApplication() {
         super.onCreate()
         doAsync {
             ExceptionHandler.getInstance().init(this@App)
+            MMKV.initialize(this@App)
             /*val map = HashMap<String, Any>()
             map[TbsCoreSettings.TBS_SETTINGS_USE_SPEEDY_CLASSLOADER] = true
             map[TbsCoreSettings.TBS_SETTINGS_USE_DEXLOADER_SERVICE] = true
@@ -27,7 +29,7 @@ class App: MultiDexApplication() {
             {
                 e.printStackTrace()
             }*/
-            YouzanSDK.init(this@App, resources.getString(R.string.youzan_clientId),resources.getString(R.string.youzan_appKey), YouZanSDKX5Adapter())
+            YouzanSDK.init(this@App, resources.getString(R.string.youzan_clientId),YouZanSDKX5Adapter())
             YouzanPreloader.preloadHtml(this@App, resources.getString(R.string.youzan_storeurl));
 
             /* val cb: PreInitCallback = object : PreInitCallback {

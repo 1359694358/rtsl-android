@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.ViewGroup
 import com.permissionx.guolindev.PermissionX
 import com.rt.rtsl.App
+import com.rt.rtsl.bean.result.LoginResultBean
 import com.rt.rtsl.ui.widget.*
 import com.rt.rtsl.utils.PermissionPageUtils
 import com.rt.rtsl.utils.ToastUtil
@@ -89,16 +90,23 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private fun init()
     {
         App.initFile(this)
-        startLoginActivity()
+        startHomeActivity()
     }
     override fun getLayoutResId(): Int {
         return R.layout.activity_main
     }
 
-    fun startLoginActivity()
+    fun startHomeActivity()
     {
         contentBinding.root.postDelayed({
-            startActivity(ActivityLogin::class.java)
+            if(LoginResultBean.LoginResult.getLoginResult().isLogin)
+            {
+                WebViewActivity.startActivity(this)
+            }
+            else
+            {
+                startActivity(ActivityLogin::class.java)
+            }
             finish()
         },2000)
     }

@@ -13,5 +13,5 @@
     <string name="app_policy">润泰丝路隐私政策.docx</string>
     <string name="youzan_storeurl">https://store.youzan.com/shop/v2/showcase/shop/dashboard/index</string>
     <string name="youzan_clientId">e88624886b67c1085b</string>
-    <string name="youzan_appKey">e88624886b67c1085b</string>
+    <string name="youzan_appKey"></string>
 </resources>

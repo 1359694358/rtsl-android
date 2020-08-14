@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import com.permissionx.guolindev.PermissionX
 import com.rt.rtsl.ui.widget.*
 import com.rt.rtsl.bean.request.LoginType
+import com.rt.rtsl.bean.result.LoginResultBean
 import com.rt.rtsl.utils.*
 import com.rt.rtsl.vm.LoginViewModel
 import com.rtsl.app.android.R
@@ -83,6 +84,9 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>() {
             {
                 ToastUtil.show(this,"登录成功")
                 logd("登录成功")
+                LoginResultBean.LoginResult.setLoginResult(it.data)
+                WebViewActivity.startActivity(this)
+                finish()
             }
             else
             {
@@ -209,7 +213,7 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>() {
         //延时直接结束程序进程
        Handler().postDelayed({
            killProcess()
-       },1000);
+       },200);
     }
 
 }
