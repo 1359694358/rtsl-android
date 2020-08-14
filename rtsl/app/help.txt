@@ -1,0 +1,2 @@
+1.事件回调说明
+https://github.com/youzan/YouzanMobileSDK-Android/wiki/%E5%BC%80%E6%94%BE%E4%BA%8B%E4%BB%B6

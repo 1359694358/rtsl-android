@@ -24,6 +24,9 @@ interface ServerApi
 
     @POST("/api/ap_user/login")
     fun login(@Body loginEntity: LoginEntity):Observable<JSONObject>
+
+    @POST("api/ap_user/yzLogin")
+    fun sysYouZanUser():Observable<JSONObject>
 }
 
 object AppApi
