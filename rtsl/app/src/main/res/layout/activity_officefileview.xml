@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <include android:id="@+id/toolbarBindingView" layout="@layout/app_toolbar"/>
-        <FrameLayout
+        <com.rt.rtsl.ui.widget.FrameLayoutX
             android:id="@+id/fileContainer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

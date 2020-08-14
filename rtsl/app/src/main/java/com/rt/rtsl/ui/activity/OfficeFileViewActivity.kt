@@ -8,6 +8,7 @@ import com.rt.rtsl.utils.FileUtil
 import com.rtsl.app.android.R
 import com.rtsl.app.android.databinding.ActivityOfficefileviewBinding
 import com.tencent.smtt.sdk.TbsReaderView
+import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.startActivity
 
 
@@ -27,15 +28,16 @@ class OfficeFileViewActivity: BaseActivity<ActivityOfficefileviewBinding>() {
             return str
         }
         private const val FilePath="FilePath"
-        fun startActivity(context: Context,filePath:String)
+        private const val Title="Title"
+        fun startActivity(context: Context,filePath:String,title:String="")
         {
-            context.startActivity<OfficeFileViewActivity>(Pair(FilePath,filePath))
+            context.startActivity<OfficeFileViewActivity>(Pair(FilePath,filePath),Pair(Title,title))
         }
     }
     override fun getLayoutResId(): Int {
         return R.layout.activity_officefileview
     }
-    lateinit var tbsReaderView:TbsReaderView
+     var tbsReaderView:TbsReaderView?=null
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -43,24 +45,28 @@ class OfficeFileViewActivity: BaseActivity<ActivityOfficefileviewBinding>() {
             TbsReaderView.ReaderCallback { p0, p1, p2 ->
 
             })
+        var title:String?=intent.getStringExtra(Title)
+        title?.let {
+            setTitle(it)
+        }
         contentBinding.fileContainer.addView(tbsReaderView,FrameLayout.LayoutParams(-1,-1))
+        contentBinding.fileContainer.allowLeftRightTouch=false
         val bundle = Bundle()
         var filePath:String?=intent.getStringExtra(FilePath)
         bundle.putString("filePath", filePath)
         bundle.putString("tempPath", FileUtil.CACHE)
         filePath?.let {
-            val result: Boolean = tbsReaderView.preOpen(getFileType(filePath), false)
+            val result: Boolean = tbsReaderView?.preOpen(getFileType(filePath), false)?:false
             if (result) {
-                tbsReaderView.openFile(bundle)
+                tbsReaderView?.openFile(bundle)
             } else {
             }
         }
 
     }
 
-    override fun finish() {
-        if(::tbsReaderView.isInitialized)
-            tbsReaderView.onStop()
-        super.finish()
+    override fun onDestroy() {
+            tbsReaderView?.onStop()
+        super.onDestroy()
     }
 }

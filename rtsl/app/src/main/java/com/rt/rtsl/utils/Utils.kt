@@ -10,6 +10,11 @@ import android.view.View
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebView.setWebContentsDebuggingEnabled
+import com.tencent.mmkv.MMKV
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
+import java.io.ObjectInputStream
+import java.io.ObjectOutputStream
 
 fun Context.startActivity(activity: String) {
     val intent = Intent()
@@ -93,4 +98,50 @@ fun com.tencent.smtt.sdk.WebView.setWebSetting() {
     if (Build.VERSION.SDK_INT >= 21) {
         settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
     }
+}
+
+fun saveAny(key:String, obj:Any)
+{
+    var bos= ByteArrayOutputStream()
+    var oos= ObjectOutputStream(bos)
+    oos.writeObject(obj)
+    var saved= MMKV.defaultMMKV().encode(key,bos.toByteArray())
+    bos.close()
+    Log.d("test","$saved")
+}
+
+fun <T> readAny(key:String):T?
+{
+    var byte:ByteArray?=MMKV.defaultMMKV().decodeBytes(key)
+    byte.let {
+
+        try {
+            var ois= ObjectInputStream(ByteArrayInputStream(byte))
+            var obj:Any= ois.readObject()
+            ois.close()
+            return obj as T?
+        }
+        catch (e:Exception)
+        {
+            e.printStackTrace()
+        }
+    }
+    return null
+}
+fun saveData(key:String,pdata:Parcelable)
+{
+    var saved= MMKV.defaultMMKV().encode(key,pdata)
+    Log.d("test","$saved")
+}
+
+
+fun <T : Parcelable> getCacheData(key: String, clazz: Class<T>): T?
+{
+    return MMKV.defaultMMKV().decodeParcelable(key, clazz)
+}
+
+
+fun clearCache(key:String)
+{
+    MMKV.defaultMMKV().removeValueForKey(key)
 }

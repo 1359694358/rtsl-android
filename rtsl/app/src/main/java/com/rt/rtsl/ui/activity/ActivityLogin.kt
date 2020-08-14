@@ -3,6 +3,7 @@ package com.rt.rtsl.ui.activity
 import android.Manifest
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.Handler
 import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
@@ -105,19 +106,19 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>() {
         contentBinding.bottomLayout.gov2.setOnClickListener {
             var use_terms=resources.getString(R.string.use_terms)
             var path="${FileUtil.CACHE}${use_terms}"
-            OfficeFileViewActivity.startActivity(it.context,path)
+            OfficeFileViewActivity.startActivity(it.context,path,contentBinding.bottomLayout.gov2.text.toString())
         }
 
         contentBinding.bottomLayout.gov4.setOnClickListener {
             var app_policy=resources.getString(R.string.app_policy)
             var path="${FileUtil.CACHE}${app_policy}"
-            OfficeFileViewActivity.startActivity(it.context,path)
+            OfficeFileViewActivity.startActivity(it.context,path,contentBinding.bottomLayout.gov4.text.toString())
         }
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
-        killProcess()
+        backHandle()
     }
 
     fun requestReadPhoneNumberPermission()
@@ -205,7 +206,10 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>() {
     }
 
     override fun backHandle() {
-        killProcess()
+        //延时直接结束程序进程
+       Handler().postDelayed({
+           killProcess()
+       },1000);
     }
 
 }
