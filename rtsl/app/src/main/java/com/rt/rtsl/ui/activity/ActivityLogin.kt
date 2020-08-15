@@ -1,6 +1,7 @@
 package com.rt.rtsl.ui.activity
 
 import android.Manifest
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
@@ -8,17 +9,20 @@ import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import com.mediacloud.app.share.SocialLoginControl
+import com.mediacloud.app.share.socialuserinfo.SocialUserInfo
 import com.permissionx.guolindev.PermissionX
-import com.rt.rtsl.ui.widget.*
 import com.rt.rtsl.bean.request.LoginType
 import com.rt.rtsl.bean.result.LoginResultBean
 import com.rt.rtsl.utils.*
+import com.rt.rtsl.utils.alipay.AliPayLogin
 import com.rt.rtsl.vm.LoginViewModel
 import com.rtsl.app.android.R
 import com.rtsl.app.android.databinding.ActivityLoginBinding
 import com.rtsl.app.android.databinding.SimpleDialogBinding
+import com.umeng.socialize.bean.SHARE_MEDIA
 
-class ActivityLogin: BaseActivity<ActivityLoginBinding>() {
+class ActivityLogin: BaseActivity<ActivityLoginBinding>(), SocialLoginControl.SocialLoginListener {
     override fun getLayoutResId(): Int {
         return R.layout.activity_login
     }
@@ -34,6 +38,7 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>() {
         super.onCreate(savedInstanceState)
         setTitle(R.string.normaltitle)
 //        requestReadPhoneNumberPermission()
+        SocialLoginControl.addSocialLoginListener(this)
         contentBinding.oneKeyLogin.loginSmsLayoutSwitch.setOnClickListener {
             contentBinding.oneKeyLogin.root.visibility= View.GONE
             contentBinding.smsCodeLogin.root.visibility=View.VISIBLE
@@ -74,6 +79,7 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>() {
                 ToastUtil.show(it.context,"请输入验证码")
                 return@setOnClickListener
             }
+            loginType=LoginType.Mobile
             phone=contentBinding.smsCodeLogin.phoneInput.text.toString();
             var verCode=contentBinding.smsCodeLogin.smsCodeInput.text.toString()
             loginViewModel.login(loginType,phone,verKey,verCode,weChatId,alipayId)
@@ -119,6 +125,16 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>() {
             OfficeFileViewActivity.startActivity(it.context,path,contentBinding.bottomLayout.gov4.text.toString())
         }
         contentBinding.smsCodeLogin.phoneInput.requestFocus()
+
+
+        contentBinding.bottomLayout.loginByWeChat.setOnClickListener {
+            loginType=LoginType.WeChat
+            SocialLoginControl.socialdoOauthVerify(SHARE_MEDIA.WEIXIN,this)
+        }
+        contentBinding.bottomLayout.loginByAliPay.setOnClickListener {
+            loginType=LoginType.Alipay
+            AliPayLogin.openAuthScheme(this)
+        }
     }
 
     override fun onBackPressed() {
@@ -217,4 +233,40 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>() {
        },200);
     }
 
+    override fun getSocialuserInfoError() {
+        logd("loginComplete")
+        ToastUtil.show(this,"获取用户信息失败")
+    }
+
+    override fun loginComplete(p0: MutableMap<String, String>?, p1: SHARE_MEDIA?)
+    {
+        logd("loginComplete")
+    }
+
+    override fun loginError(p0: String?, p1: SHARE_MEDIA?)
+    {
+        logd("loginError")
+        ToastUtil.show(this,"授权登录失败")
+    }
+
+    override fun getSocialUserInfoComplete(p0: SocialUserInfo?)
+    {
+        logd("getSocialUserInfoComplete")
+        if(p0!=null)
+        {
+            weChatId=p0.uid
+            var verCode=""
+            loginViewModel.login(loginType,phone,verKey,verCode,weChatId,alipayId)
+        }
+        else
+        {
+            ToastUtil.show(this,"获取用户信息失败")
+        }
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        SocialLoginControl.onActivityResult(requestCode, resultCode, data)
+    }
 }

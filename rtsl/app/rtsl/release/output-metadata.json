@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "com.mediacloud.project.ae326a475ce19c3a3aa9c7ff485e8dcef.YTJAWL",
+  "variantName": "processRtslReleaseResources",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "versionCode": 1,
+      "versionName": "1.0.0",
+      "outputFile": "app-rtsl-release.apk"
+    }
+  ]
+}

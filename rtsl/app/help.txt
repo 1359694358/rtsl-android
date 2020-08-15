@@ -1,2 +1,9 @@
+签名文件
+
+rtsl-android\rtsl\app.keystore.jks
+密码android
+别名android
+别名密码android
+
 1.事件回调说明
 https://github.com/youzan/YouzanMobileSDK-Android/wiki/%E5%BC%80%E6%94%BE%E4%BA%8B%E4%BB%B6

@@ -1,8 +1,12 @@
 package com.rt.rtsl.ui.activity
 
+import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
 import android.graphics.PixelFormat
 import android.os.Bundle
+import android.os.Handler
 import android.text.TextUtils
 import android.view.View
 import androidx.lifecycle.Observer
@@ -14,11 +18,10 @@ import com.rtsl.app.android.R
 import com.rtsl.app.android.databinding.ActivityWebviewBinding
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient
 import com.tencent.smtt.sdk.WebChromeClient
-import com.tencent.smtt.sdk.WebView
-import com.tencent.smtt.sdk.WebViewClient
 import com.youzan.androidsdk.YouzanSDK
 import com.youzan.androidsdk.YouzanToken
 import com.youzan.androidsdk.event.AbsAuthEvent
+import com.youzan.androidsdk.event.AbsChooserEvent
 import org.jetbrains.anko.startActivity
 
 
@@ -71,18 +74,18 @@ class WebViewActivity: BaseActivity<ActivityWebviewBinding>()
                 customViewCallback.onCustomViewHidden()
             }
         })
-        contentBinding.mView.setWebViewClient(object: WebViewClient()
+       /* contentBinding.mView.setWebViewClient(object: WebViewClient()
         {
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
                 contentBinding.mView.loadUrl(url)
                 return true;
             }
-        })
+        })*/
         if(TextUtils.isEmpty(url))
         {
             url=resources.getString(R.string.youzan_storeurl)
         }
-        url="https://www.baidu.com"
+//        url="https://www.baidu.com"
         contentBinding.mView.loadUrl(url)
         loginViewMode.youzanTokenObserver.observe(this, Observer {
             if(it?.yes()==true)
@@ -106,6 +109,11 @@ class WebViewActivity: BaseActivity<ActivityWebviewBinding>()
                 contentBinding.mView.loadUrl(url)
             }
         })
+        contentBinding.mView.subscribe(object : AbsChooserEvent() {
+            override fun call(p0: Context?, p1: Intent?, p2: Int) {
+                startActivityForResult(p1,p2)
+            }
+        })
         contentBinding.mView.subscribe(object :AbsAuthEvent()
         {
             override fun call( context:Context, needLogin:Boolean )
@@ -121,5 +129,28 @@ class WebViewActivity: BaseActivity<ActivityWebviewBinding>()
                 }
             }
         })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode== Activity.RESULT_OK)
+        {
+            contentBinding.mView.receiveFile(requestCode,data)
+        }
+    }
+
+    override fun backHandle()
+    {
+        if(contentBinding.mView.pageCanGoBack()||contentBinding.mView.canGoBack())
+        {
+            contentBinding.mView.goBack();
+        }
+        else
+        {
+            //延时直接结束程序进程
+            Handler().postDelayed({
+                killProcess()
+            },200);
+        }
     }
 }

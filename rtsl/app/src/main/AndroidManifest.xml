@@ -47,13 +47,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.rt.rtsl.wxapi.WXEntryActivity"
-            android:configChanges="locale|layoutDirection|orientation|keyboardHidden|navigation|screenSize"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            tools:replace="android:name" />
-        <activity
             android:screenOrientation="portrait"
             android:name="com.rt.rtsl.ui.activity.ActivityLogin"
             android:configChanges="locale|layoutDirection|orientation|keyboardHidden|navigation|screenSize"
@@ -75,6 +68,23 @@
             android:label="dexopt"
             android:process=":dexopt" >
         </service>
+
+        <activity
+            android:name="${applicationId}.wxapi.WXEntryActivity"
+            android:configChanges="locale|layoutDirection|keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            tools:replace="android:name" />
+
+        <activity android:name="com.alipay.sdk.app.AlipayResultActivity" tools:node="merge">
+            <intent-filter tools:node="replace">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="${applicationId}"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

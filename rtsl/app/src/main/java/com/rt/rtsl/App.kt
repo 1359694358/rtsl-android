@@ -3,6 +3,7 @@ package com.rt.rtsl
 import android.content.Context
 import android.util.Log
 import androidx.multidex.MultiDexApplication
+import com.mediacloud.app.share.SocialShareControl
 import com.rt.rtsl.utils.AssetsManager
 import com.rt.rtsl.utils.ExceptionHandler
 import com.rt.rtsl.utils.FileUtil
@@ -22,6 +23,7 @@ class App: MultiDexApplication() {
         doAsync {
             ExceptionHandler.getInstance().init(this@App)
             MMKV.initialize(this@App)
+            SocialShareControl.initAppKey(this@App)
             val map = HashMap<String, Any>()
             map[TbsCoreSettings.TBS_SETTINGS_USE_SPEEDY_CLASSLOADER] = true
             map[TbsCoreSettings.TBS_SETTINGS_USE_DEXLOADER_SERVICE] = true
