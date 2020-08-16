@@ -16,8 +16,11 @@ import com.rt.rtsl.utils.startActivity
 import com.rt.rtsl.vm.LoginViewModel
 import com.rtsl.app.android.R
 import com.rtsl.app.android.databinding.ActivityWebviewBinding
+import com.tencent.smtt.export.external.extension.proxy.ProxyWebViewClientExtension
+import com.tencent.smtt.export.external.extension.proxy.X5ProxyWebViewClientExtension
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient
 import com.tencent.smtt.sdk.WebChromeClient
+import com.tencent.smtt.sdk.WebView
 import com.youzan.androidsdk.YouzanSDK
 import com.youzan.androidsdk.YouzanToken
 import com.youzan.androidsdk.event.AbsAuthEvent
@@ -72,6 +75,13 @@ class WebViewActivity: BaseActivity<ActivityWebviewBinding>()
             ) {
                 super.onShowCustomView(view, customViewCallback)
                 customViewCallback.onCustomViewHidden()
+            }
+
+            override fun onReceivedTitle(p0: WebView?, p1: String?) {
+                super.onReceivedTitle(p0, p1)
+                p1?.let {
+                    setTitle(it)
+                }
             }
         })
        /* contentBinding.mView.setWebViewClient(object: WebViewClient()
