@@ -1,5 +1,6 @@
 package com.rt.rtsl.net
 
+import com.rt.rtsl.bean.request.AlipayAuthEntoty
 import com.rt.rtsl.bean.request.LoginEntity
 import com.rt.rtsl.bean.request.SmsCodeEntity
 import com.rt.rtsl.bean.request.YouZanSysEntity
@@ -28,14 +29,18 @@ interface ServerApi
 
     @POST("api/ap_user/yzLogin")
     fun sysYouZanUser(@Body youZanSysEntity: YouZanSysEntity):Observable<JSONObject>
+
+    @POST("api/ap_user/alipayAuth")
+    fun alipayAuth(@Body authEntoty: AlipayAuthEntoty):Observable<JSONObject>
 }
 
 object AppApi
 {
-    var ReadTimeOut = 5L
-    var ConnectTimeOut = 5L
+    var ReadTimeOut = 500L
+    var ConnectTimeOut = 500L
     //服务器接口地址修改就改这
     val Host="https://m.runtae.com"
+//    val Host="http://www.huimiao.wang"
     val serverApi:ServerApi
     init {
         RxJavaPlugins.setErrorHandler { throwable ->

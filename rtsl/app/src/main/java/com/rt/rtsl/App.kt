@@ -11,9 +11,8 @@ import com.rtsl.app.android.R
 import com.tencent.mmkv.MMKV
 import com.tencent.smtt.export.external.TbsCoreSettings
 import com.tencent.smtt.sdk.QbSdk
-import com.youzan.androidsdk.YouzanSDK
-import com.youzan.androidsdkx5.YouZanSDKX5Adapter
-import com.youzan.androidsdkx5.YouzanPreloader
+import com.youzan.androidsdk.*
+import com.youzan.androidsdkx5.*
 import org.jetbrains.anko.doAsync
 
 

@@ -14,6 +14,7 @@ import com.mediacloud.app.share.socialuserinfo.SocialUserInfo
 import com.permissionx.guolindev.PermissionX
 import com.rt.rtsl.bean.request.LoginType
 import com.rt.rtsl.bean.result.LoginResultBean
+import com.rt.rtsl.ui.widget.*
 import com.rt.rtsl.utils.*
 import com.rt.rtsl.utils.alipay.AliPayLogin
 import com.rt.rtsl.vm.LoginViewModel
@@ -134,6 +135,19 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>(), SocialLoginControl.So
         contentBinding.bottomLayout.loginByAliPay.setOnClickListener {
             loginType=LoginType.Alipay
             AliPayLogin.openAuthScheme(this)
+            {
+                if(it!=null&&it.data?.user_id?.isNotEmpty()==true)
+                {
+                    alipayId=it.data.user_id
+                    var verCode=""
+                    logd("支付宝授权成功 ${it.data.user_id}")
+                    loginViewModel.login(loginType,phone,verKey,verCode,weChatId,alipayId)
+                }
+                else
+                {
+                    ToastUtil.show(this,"支付宝登录失败")
+                }
+            }
         }
     }
 
