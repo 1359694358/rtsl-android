@@ -18,8 +18,7 @@ android {
         }*/
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-    def flavorDimen="flavorDimen"
-    flavorDimensions flavorDimen
+    flavorDimensions project.applicationId
     productFlavors
             {
                 rtsl
@@ -29,7 +28,7 @@ android {
                             versionCode Integer.parseInt(project.versionCode)
                             //版本号 来自于gradle.properties的配置
                             versionName project.versionName
-                            dimension flavorDimen
+                            dimension project.applicationId
                         }
             }
     signingConfigs {
