@@ -7,6 +7,7 @@ import com.mediacloud.app.share.SocialShareControl
 import com.rt.rtsl.utils.AssetsManager
 import com.rt.rtsl.utils.ExceptionHandler
 import com.rt.rtsl.utils.FileUtil
+import com.rt.rtsl.utils.logd
 import com.rtsl.app.android.R
 import com.tencent.mmkv.MMKV
 import com.tencent.smtt.export.external.TbsCoreSettings
@@ -64,9 +65,11 @@ class App: MultiDexApplication() {
             doAsync {
                 FileUtil.initPackage(context)
                 var use_terms=context.resources.getString(R.string.use_terms)
-                AssetsManager.copyAssetFile2SDCard(context,use_terms,FileUtil.createFile("${FileUtil.CACHE}${use_terms}"))
+                var cacheDir=context.cacheDir.absolutePath
+                Log.d("AppCache","cacheDir:$cacheDir")
+                AssetsManager.copyAssetFile2SDCard(context,use_terms,FileUtil.createFile("${cacheDir}${use_terms}"))
                 var app_policy=context.resources.getString(R.string.app_policy)
-                AssetsManager.copyAssetFile2SDCard(context,app_policy,FileUtil.createFile("${FileUtil.CACHE}${app_policy}"))
+                AssetsManager.copyAssetFile2SDCard(context,app_policy,FileUtil.createFile("${cacheDir}${app_policy}"))
             }
         }
     }

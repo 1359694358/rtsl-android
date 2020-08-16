@@ -104,14 +104,13 @@ class WebViewActivity: BaseActivity<ActivityWebviewBinding>()
                 YouzanSDK.userLogout(this@WebViewActivity);
                 //调用login接口, 获取数据, 组装成YouzanToken, 回传给SDK
                 var token =  YouzanToken()
-                token.setAccessToken(it.data.yzOpenId)
-                token.setCookieKey(it.data.cookieKey)
-                token.setCookieValue(it.data.cookieValue)
+//                token.setAccessToken(it.data)
+                token.setCookieKey(it.data.data.cookieKey)
+                token.setCookieValue(it.data.data.cookieValue)
 
                 // 这里注意调用顺序。先传递给sdk，再刷新view
                 YouzanSDK.sync(getApplicationContext(), token);
-//                contentBinding.mView.loadUrl(url)
-                contentBinding.mView.sync(token);
+                contentBinding.mView.loadUrl(url)
             }
             else
             {

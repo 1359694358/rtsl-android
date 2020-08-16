@@ -47,6 +47,9 @@ import android.util.Log;
  * @author bin
  */
 public class FileUtil {
+
+	public static final String APP_DATA_DIR_CACHE="/cache/";
+
 	public static final String SDCARD  = Environment.getExternalStorageDirectory().getPath();
 	public static String HOST=null;//"/meilihelan";
 	public static String SOBEY  =null;// SDCARD +HOST+ "/";

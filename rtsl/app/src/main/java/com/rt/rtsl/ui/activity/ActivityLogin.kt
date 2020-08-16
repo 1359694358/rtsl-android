@@ -116,13 +116,15 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>(), SocialLoginControl.So
 
         contentBinding.bottomLayout.gov2.setOnClickListener {
             var use_terms=resources.getString(R.string.use_terms)
-            var path="${FileUtil.CACHE}${use_terms}"
+            var cacheDir=cacheDir.absolutePath
+            var path="${cacheDir}${use_terms}"
             OfficeFileViewActivity.startActivity(it.context,path,contentBinding.bottomLayout.gov2.text.toString())
         }
 
         contentBinding.bottomLayout.gov4.setOnClickListener {
             var app_policy=resources.getString(R.string.app_policy)
-            var path="${FileUtil.CACHE}${app_policy}"
+            var cacheDir=cacheDir.absolutePath
+            var path="${cacheDir}${app_policy}"
             OfficeFileViewActivity.startActivity(it.context,path,contentBinding.bottomLayout.gov4.text.toString())
         }
         contentBinding.smsCodeLogin.phoneInput.requestFocus()
