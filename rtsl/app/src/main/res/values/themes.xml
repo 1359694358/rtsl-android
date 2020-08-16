@@ -17,5 +17,6 @@
     <style name="Theme.Rtsl.Home" parent="Theme.Rtsl">
         <item name="android:windowFullscreen">true</item>
         <item name="android:fitsSystemWindows">false</item>
+        <item name="android:windowBackground">@mipmap/rtsl_splash</item>
     </style>
 </resources>
