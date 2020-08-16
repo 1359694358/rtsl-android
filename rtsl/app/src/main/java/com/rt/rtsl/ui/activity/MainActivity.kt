@@ -1,21 +1,31 @@
 package com.rt.rtsl.ui.activity
 
 import android.Manifest
+import android.content.Intent
 import android.os.Bundle
 import android.view.ViewGroup
 import com.permissionx.guolindev.PermissionX
 import com.rt.rtsl.App
 import com.rt.rtsl.bean.result.LoginResultBean
-import com.rt.rtsl.ui.widget.*
+import com.rt.rtsl.ui.widget.setCancelClickListener
+import com.rt.rtsl.ui.widget.setSubTitle
+import com.rt.rtsl.ui.widget.setSureClickListener
+import com.rt.rtsl.ui.widget.show
 import com.rt.rtsl.utils.PermissionPageUtils
 import com.rt.rtsl.utils.ToastUtil
 import com.rt.rtsl.utils.startActivity
 import com.rtsl.app.android.R
 import com.rtsl.app.android.databinding.ActivityMainBinding
 import com.rtsl.app.android.databinding.SimpleDialogBinding
+
+
 class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onCreate(savedInstanceState: Bundle?)
     {
+        if (intent.flags and Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT != 0) {
+            finish()
+            return
+        }
         super.onCreate(savedInstanceState)
         requestAppPermission()
     }

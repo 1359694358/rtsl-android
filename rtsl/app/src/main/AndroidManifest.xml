@@ -42,7 +42,6 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
         <activity
-            android:launchMode="singleTask"
             android:name="com.rt.rtsl.ui.activity.MainActivity"
             android:configChanges="locale|layoutDirection|orientation|keyboardHidden|navigation|screenSize"
             >

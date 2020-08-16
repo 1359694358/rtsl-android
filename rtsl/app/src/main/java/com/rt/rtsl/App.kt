@@ -22,7 +22,16 @@ class App: MultiDexApplication() {
         super.onCreate()
         doAsync {
             ExceptionHandler.getInstance().init(this@App)
+
+            //
+            var use_terms=this@App.resources.getString(R.string.use_terms)
+            var cacheDir=this@App.cacheDir.absolutePath
+            Log.d("AppCache","cacheDir:$cacheDir")
+            AssetsManager.copyAssetFile2SDCard(this@App,use_terms,FileUtil.createFile("${cacheDir}${use_terms}"))
+            var app_policy=this@App.resources.getString(R.string.app_policy)
+            AssetsManager.copyAssetFile2SDCard(this@App,app_policy,FileUtil.createFile("${cacheDir}${app_policy}"))
             MMKV.initialize(this@App)
+
             SocialShareControl.initAppKey(this@App)
             val map = HashMap<String, Any>()
             map[TbsCoreSettings.TBS_SETTINGS_USE_SPEEDY_CLASSLOADER] = true
@@ -64,12 +73,6 @@ class App: MultiDexApplication() {
         {
             doAsync {
                 FileUtil.initPackage(context)
-                var use_terms=context.resources.getString(R.string.use_terms)
-                var cacheDir=context.cacheDir.absolutePath
-                Log.d("AppCache","cacheDir:$cacheDir")
-                AssetsManager.copyAssetFile2SDCard(context,use_terms,FileUtil.createFile("${cacheDir}${use_terms}"))
-                var app_policy=context.resources.getString(R.string.app_policy)
-                AssetsManager.copyAssetFile2SDCard(context,app_policy,FileUtil.createFile("${cacheDir}${app_policy}"))
             }
         }
     }
