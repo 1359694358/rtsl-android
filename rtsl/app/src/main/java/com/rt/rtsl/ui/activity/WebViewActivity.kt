@@ -11,6 +11,7 @@ import android.text.TextUtils
 import android.view.View
 import androidx.lifecycle.Observer
 import com.rt.rtsl.bean.result.LoginResultBean
+import com.rt.rtsl.utils.ToastUtil
 import com.rt.rtsl.utils.logd
 import com.rt.rtsl.utils.startActivity
 import com.rt.rtsl.vm.LoginViewModel
@@ -156,10 +157,24 @@ class WebViewActivity: BaseActivity<ActivityWebviewBinding>()
         }
         else
         {
-            //延时直接结束程序进程
-            Handler().postDelayed({
-                killProcess()
-            },200);
+            var temp = System.currentTimeMillis()
+            if (temp - time > Interval) {
+                ToastUtil.show(this, "再按一次退出")
+                time = temp
+            } else {
+                finish()
+                //延时直接结束程序进程
+                Handler().postDelayed({
+                    killProcess()
+                },200);
+            }
         }
+    }
+
+
+    val Interval=2000
+    var time = System.currentTimeMillis()-Interval
+    override fun onBackPressed() {
+       backHandle()
     }
 }

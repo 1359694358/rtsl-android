@@ -132,7 +132,8 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>(), SocialLoginControl.So
 
         contentBinding.bottomLayout.loginByWeChat.setOnClickListener {
             loginType=LoginType.WeChat
-            SocialLoginControl.socialdoOauthVerify(SHARE_MEDIA.WEIXIN,this)
+            ToastUtil.show(this,"暂未开放")
+//            SocialLoginControl.socialdoOauthVerify(SHARE_MEDIA.WEIXIN,this)
         }
         contentBinding.bottomLayout.loginByAliPay.setOnClickListener {
             loginType=LoginType.Alipay
