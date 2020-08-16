@@ -121,4 +121,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         },2000)
     }
 
+    override fun getFitSystemWindow(): Boolean {
+        return false
+    }
 }

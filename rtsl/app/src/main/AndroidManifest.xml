@@ -42,6 +42,7 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
         <activity
+            android:theme="@style/Theme.Rtsl.Home"
             android:name="com.rt.rtsl.ui.activity.MainActivity"
             android:configChanges="locale|layoutDirection|orientation|keyboardHidden|navigation|screenSize"
             >
