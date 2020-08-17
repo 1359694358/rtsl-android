@@ -8,7 +8,7 @@ import com.rt.rtsl.utils.UtilsKt;
 
 public class LoginResultBean extends BaseResultBean<LoginResultBean.LoginResult>{
 
-//    "id": 3,
+    //    "id": 3,
 //        "userId": null,
 //        "telephone": "19136070747",
 //        "wxId": null,
@@ -44,7 +44,14 @@ public class LoginResultBean extends BaseResultBean<LoginResultBean.LoginResult>
             synchronized (LoginResult.class)
             {
                 loginResult=value;
-                UtilsKt.saveData(UserInfo,value);
+                if(value!=null)
+                {
+                    UtilsKt.saveData(UserInfo,value);
+                }
+                else
+                {
+                    UtilsKt.clearCache(UserInfo);
+                }
             }
         }
 

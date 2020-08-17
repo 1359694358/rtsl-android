@@ -1,23 +1,33 @@
 package com.rt.rtsl
 
+import android.app.Activity
+import android.app.Application
 import android.content.Context
 import android.util.Log
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStore
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.multidex.MultiDexApplication
 import com.mediacloud.app.share.SocialShareControl
 import com.rt.rtsl.utils.AssetsManager
 import com.rt.rtsl.utils.ExceptionHandler
 import com.rt.rtsl.utils.FileUtil
-import com.rt.rtsl.utils.logd
 import com.rtsl.app.android.R
 import com.tencent.mmkv.MMKV
 import com.tencent.smtt.export.external.TbsCoreSettings
 import com.tencent.smtt.sdk.QbSdk
-import com.youzan.androidsdk.*
-import com.youzan.androidsdkx5.*
+import com.youzan.androidsdk.YouzanSDK
+import com.youzan.androidsdkx5.YouZanSDKX5Adapter
+import com.youzan.androidsdkx5.YouzanPreloader
 import org.jetbrains.anko.doAsync
 
 
-class App: MultiDexApplication() {
+class App: MultiDexApplication(), ViewModelStoreOwner {
+    private val mAppViewModelStore=ViewModelStore()
+
+    private var mFactory: ViewModelProvider.Factory? = null
+
     override fun onCreate() {
         super.onCreate()
         doAsync {
@@ -75,5 +85,33 @@ class App: MultiDexApplication() {
                 FileUtil.initPackage(context)
             }
         }
+    }
+
+    fun getAppViewModelProvider(activity: Activity): ViewModelProvider
+    {
+        return ViewModelProvider(this,(activity.applicationContext as App).getAppFactory(activity))
+    }
+
+    private fun getAppFactory(activity: Activity): ViewModelProvider.Factory {
+        val application = checkApplication(activity)
+        if (mFactory == null) {
+            mFactory = ViewModelProvider.AndroidViewModelFactory.getInstance(application)
+        }
+        return mFactory!!
+    }
+
+    private fun checkApplication(activity: Activity): Application {
+        return activity.application
+                ?: throw IllegalStateException("Your activity/fragment is not yet attached to "
+                        + "Application. You can't request ViewModel before onCreate call.")
+    }
+
+    private fun checkActivity(fragment: Fragment): Activity? {
+        return fragment.activity
+                ?: throw IllegalStateException("Can't create ViewModelProvider for detached fragment")
+    }
+
+    override fun getViewModelStore(): ViewModelStore {
+        return mAppViewModelStore
     }
 }

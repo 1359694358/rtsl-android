@@ -12,7 +12,9 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.rt.rtsl.App
 import com.rt.rtsl.utils.StatusBarUtil
 import com.rtsl.app.android.R
 import com.rtsl.app.android.databinding.AppToolbarBinding
@@ -78,6 +80,11 @@ abstract class BaseActivity<T: ViewDataBinding>: AppCompatActivity()
         return ViewModelProviders.of(this).get(modelClazz)
     }
 
+    protected fun <T: ViewModel> getViewModelByApplication(modelClazz:Class<T>): T
+    {
+        return (applicationContext as App).getAppViewModelProvider(this).get(modelClazz)
+//        return ViewModelProvider..of(this.applicationContext).get(modelClazz)
+    }
     override fun finish() {
         hideKeyBroad()
         super.finish()

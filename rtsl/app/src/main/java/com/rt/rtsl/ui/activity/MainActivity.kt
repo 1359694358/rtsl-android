@@ -109,14 +109,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     fun startHomeActivity()
     {
         contentBinding.root.postDelayed({
-            if(LoginResultBean.LoginResult.getLoginResult().isLogin)
+            /*if(LoginResultBean.LoginResult.getLoginResult().isLogin)
             {
                 WebViewActivity.startActivity(this)
             }
             else
             {
                 startActivity(ActivityLogin::class.java)
-            }
+            }*/
+            WebViewActivity.startActivity(this)
+            window.setBackgroundDrawable(null)
             finish()
         },2000)
     }

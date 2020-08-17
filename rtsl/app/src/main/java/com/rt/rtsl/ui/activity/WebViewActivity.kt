@@ -1,7 +1,6 @@
 package com.rt.rtsl.ui.activity
 
 import android.app.Activity
-import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.graphics.PixelFormat
@@ -39,7 +38,7 @@ class WebViewActivity: BaseActivity<ActivityWebviewBinding>()
             context.startActivity<WebViewActivity>(Pair(WebUrl,url))
         }
     }
-    val loginViewMode:LoginViewModel by lazy { getViewModel(LoginViewModel::class.java) }
+    val loginViewMode:LoginViewModel by lazy { getViewModelByApplication(LoginViewModel::class.java) }
     override fun getLayoutResId(): Int
     {
         return R.layout.activity_webview
@@ -50,7 +49,7 @@ class WebViewActivity: BaseActivity<ActivityWebviewBinding>()
         super.onCreate(savedInstanceState)
         getWindow().setFormat(PixelFormat.TRANSLUCENT);
         url=intent.getStringExtra(WebUrl)
-
+        contentBinding.toolbarBindingView.titleText.paint.isFakeBoldText=true
         addObsever()
         sysUserToken()
     }
@@ -134,7 +133,7 @@ class WebViewActivity: BaseActivity<ActivityWebviewBinding>()
                     {
                         YouzanSDK.userLogout(this@WebViewActivity);
                         startActivity(ActivityLogin::class.java)
-                        finish()
+//                        finish()
                     }
                 }
             }

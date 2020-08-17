@@ -1,6 +1,7 @@
 package com.rt.rtsl.ui.activity
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -28,7 +29,7 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>(), SocialLoginControl.So
         return R.layout.activity_login
     }
     lateinit var countDownTimer: CountDown
-    val loginViewModel:LoginViewModel by lazy { getViewModel(LoginViewModel::class.java) }
+    val loginViewModel:LoginViewModel by lazy { getViewModelByApplication(LoginViewModel::class.java) }
     private var loginType=LoginType.Mobile
     private var verKey:String=""
     private var weChatId:String=""
@@ -83,16 +84,14 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>(), SocialLoginControl.So
             loginType=LoginType.Mobile
             phone=contentBinding.smsCodeLogin.phoneInput.text.toString();
             var verCode=contentBinding.smsCodeLogin.smsCodeInput.text.toString()
-            loginViewModel.login(loginType,phone,verKey,verCode,weChatId,alipayId)
+            loginViewModel.login(resources.getString(R.string.youzan_clientId),loginType,phone,verKey,verCode,weChatId,alipayId)
         }
 
         loginViewModel.loginObserver.observe(this, Observer {
             if(it?.yes()==true)
             {
-                ToastUtil.show(this,"登录成功")
                 logd("登录成功")
                 LoginResultBean.LoginResult.setLoginResult(it.data)
-                WebViewActivity.startActivity(this)
                 finish()
             }
             else
@@ -100,6 +99,21 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>(), SocialLoginControl.So
                 ToastUtil.show(this,"登录失败 ${it?.msg?:""}")
             }
         })
+       /* loginViewModel.youzanTokenObserver.observe(this, Observer {
+            if(it?.yes()==true&&it.data?.data!=null)
+            {
+                ToastUtil.show(this,"登录成功")
+                logd("登录成功")
+                val intentData=Intent()
+                intentData.putExtra(Intent.ACTION_ATTACH_DATA,it.data.data)
+                setResult(Activity.RESULT_OK,intentData)
+                finish()
+            }
+            else
+            {
+                ToastUtil.show(this,"登录失败 ${it?.msg?:""}")
+            }
+        })*/
         loginViewModel.smsCodeObserver.observe(this, Observer{
             if(it?.yes()==true)
             {
@@ -144,7 +158,7 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>(), SocialLoginControl.So
                     alipayId=it.data.user_id
                     var verCode=""
                     logd("支付宝授权成功 ${it.data.user_id}")
-                    loginViewModel.login(loginType,phone,verKey,verCode,weChatId,alipayId)
+                    loginViewModel.login(resources.getString(R.string.youzan_clientId),loginType,phone,verKey,verCode,weChatId,alipayId)
                 }
                 else
                 {
@@ -154,10 +168,10 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>(), SocialLoginControl.So
         }
     }
 
-    override fun onBackPressed() {
+   /* override fun onBackPressed() {
         super.onBackPressed()
         backHandle()
-    }
+    }*/
 
     fun requestReadPhoneNumberPermission()
     {
@@ -243,12 +257,12 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>(), SocialLoginControl.So
 
     }
 
-    override fun backHandle() {
+    /*override fun backHandle() {
         //延时直接结束程序进程
        Handler().postDelayed({
            killProcess()
        },200);
-    }
+    }*/
 
     override fun getSocialuserInfoError() {
         logd("loginComplete")
@@ -273,7 +287,7 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>(), SocialLoginControl.So
         {
             weChatId=p0.uid
             var verCode=""
-            loginViewModel.login(loginType,phone,verKey,verCode,weChatId,alipayId)
+            loginViewModel.login(resources.getString(R.string.youzan_clientId),loginType,phone,verKey,verCode,weChatId,alipayId)
         }
         else
         {

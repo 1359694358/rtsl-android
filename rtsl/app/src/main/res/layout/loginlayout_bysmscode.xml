@@ -15,7 +15,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="@dimen/dimen38"
-            android:layout_marginTop="@dimen/dimen42"
+            android:layout_marginTop="@dimen/dimen26"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Hi～\n欢迎来到润泰丝路"
