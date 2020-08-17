@@ -171,7 +171,7 @@ class WebViewActivity: BaseActivity<ActivityWebviewBinding>()
     }
 
 
-    val Interval=2000
+    val Interval=3000
     var time = System.currentTimeMillis()-Interval
     override fun onBackPressed() {
        backHandle()

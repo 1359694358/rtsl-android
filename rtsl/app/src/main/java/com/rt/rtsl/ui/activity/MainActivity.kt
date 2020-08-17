@@ -118,9 +118,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 startActivity(ActivityLogin::class.java)
             }*/
             WebViewActivity.startActivity(this)
-            window.setBackgroundDrawable(null)
             finish()
         },2000)
+    }
+
+    override fun onDestroy() {
+        window?.setBackgroundDrawable(null)
+        super.onDestroy()
     }
 
     override fun getFitSystemWindow(): Boolean {
