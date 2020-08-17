@@ -5,6 +5,7 @@ import com.rt.rtsl.bean.request.LoginEntity
 import com.rt.rtsl.bean.request.SmsCodeEntity
 import com.rt.rtsl.bean.request.YouZanSysEntity
 import com.rt.rtsl.utils.ExceptionHandler
+import com.rtsl.app.android.BuildConfig
 import io.reactivex.plugins.RxJavaPlugins
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -40,7 +41,7 @@ object AppApi
     var ConnectTimeOut = 500L
     //服务器接口地址修改就改这
 //    val Host="https://m.runtae.com"
-    val Host="http://www.huimiao.wang"
+//    val Host="http://www.huimiao.wang"
     val serverApi:ServerApi
     init {
         RxJavaPlugins.setErrorHandler { throwable ->
@@ -63,7 +64,7 @@ object AppApi
         okhttpBuilder.hostnameVerifier(SSLSocketClient.getHostnameVerifier())
         val okHttpClient = okhttpBuilder.build()
         val retrofit= Retrofit.Builder()
-            .baseUrl(Host)
+            .baseUrl(BuildConfig.Host)
             .addConverterFactory(JSONObjectConvertFactory())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(okHttpClient)

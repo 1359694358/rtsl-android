@@ -27,5 +27,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             layout="@layout/login_bottom_layout"/>
+
+        <FrameLayout
+            android:visibility="gone"
+            android:id="@+id/loadingView"
+            android:paddingTop="@dimen/dimen80"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <com.qmuiteam.qmui.widget.QMUILoadingView
+                android:layout_gravity="center"
+                app:qmui_show_loading="true"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:qmui_loading_view_size="@dimen/dimen35"
+                android:layout_width="@dimen/dimen185"
+                android:layout_height="@dimen/dimen185"/>
+        </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

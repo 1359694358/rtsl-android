@@ -51,10 +51,12 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+            buildConfigField "String","Host",'"https://m.runtae.com"'//签到任务接口
         }
 
         debug {
             signingConfig signingConfigs.release
+            buildConfigField "String","Host",'"http://www.huimiao.wang"'//签到任务接口
         }
     }
     compileOptions {

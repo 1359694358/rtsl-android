@@ -27,4 +27,8 @@
     <dimen name="dimen38">38dp</dimen>
     <dimen name="dimen16">16dp</dimen>
     <dimen name="dimen31">31dp</dimen>
+    <dimen name="dimen30">30dp</dimen>
+    <dimen name="dimen3">3dp</dimen>
+    <dimen name="dimen35">35dp</dimen>
+    <dimen name="dimen80">80dp</dimen>
 </resources>

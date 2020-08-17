@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import com.mediacloud.app.share.SocialLoginControl
 import com.mediacloud.app.share.socialuserinfo.SocialUserInfo
 import com.permissionx.guolindev.PermissionX
+import com.qmuiteam.qmui.widget.QMUILoadingView
 import com.rt.rtsl.bean.request.LoginType
 import com.rt.rtsl.bean.result.LoginResultBean
 import com.rt.rtsl.ui.widget.*
@@ -35,6 +36,7 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>(), SocialLoginControl.So
     private var weChatId:String=""
     private var alipayId:String=""
     private var phone=""
+
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -84,10 +86,13 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>(), SocialLoginControl.So
             loginType=LoginType.Mobile
             phone=contentBinding.smsCodeLogin.phoneInput.text.toString();
             var verCode=contentBinding.smsCodeLogin.smsCodeInput.text.toString()
+            contentBinding.loadingView.visibility=View.VISIBLE
             loginViewModel.login(resources.getString(R.string.youzan_clientId),phone,"",loginType,phone,verKey,verCode,weChatId,alipayId)
         }
 
-        loginViewModel.loginObserver.observe(this, Observer {
+        loginViewModel.loginObserver.observe(this, Observer
+        {
+            contentBinding.loadingView.visibility=View.GONE
             if(it?.yes()==true)
             {
                 logd("登录成功")
@@ -133,8 +138,10 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>(), SocialLoginControl.So
             loginType=LoginType.WeChat
             ToastUtil.show(this,"暂未开放")
 //            SocialLoginControl.socialdoOauthVerify(SHARE_MEDIA.WEIXIN,this)
+//            contentBinding.loadingView.visibility=View.VISIBLE
         }
         contentBinding.bottomLayout.loginByAliPay.setOnClickListener {
+            contentBinding.loadingView.visibility=View.VISIBLE
             loginType=LoginType.Alipay
             AliPayLogin.openAuthScheme(this)
             {
@@ -148,6 +155,7 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>(), SocialLoginControl.So
                 else
                 {
                     ToastUtil.show(this,"支付宝登录失败")
+                    contentBinding.loadingView.visibility=View.GONE
                 }
             }
         }
