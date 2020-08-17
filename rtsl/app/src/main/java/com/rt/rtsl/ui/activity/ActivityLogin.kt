@@ -84,7 +84,7 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>(), SocialLoginControl.So
             loginType=LoginType.Mobile
             phone=contentBinding.smsCodeLogin.phoneInput.text.toString();
             var verCode=contentBinding.smsCodeLogin.smsCodeInput.text.toString()
-            loginViewModel.login(resources.getString(R.string.youzan_clientId),loginType,phone,verKey,verCode,weChatId,alipayId)
+            loginViewModel.login(resources.getString(R.string.youzan_clientId),phone,"",loginType,phone,verKey,verCode,weChatId,alipayId)
         }
 
         loginViewModel.loginObserver.observe(this, Observer {
@@ -99,21 +99,6 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>(), SocialLoginControl.So
                 ToastUtil.show(this,"登录失败 ${it?.msg?:""}")
             }
         })
-       /* loginViewModel.youzanTokenObserver.observe(this, Observer {
-            if(it?.yes()==true&&it.data?.data!=null)
-            {
-                ToastUtil.show(this,"登录成功")
-                logd("登录成功")
-                val intentData=Intent()
-                intentData.putExtra(Intent.ACTION_ATTACH_DATA,it.data.data)
-                setResult(Activity.RESULT_OK,intentData)
-                finish()
-            }
-            else
-            {
-                ToastUtil.show(this,"登录失败 ${it?.msg?:""}")
-            }
-        })*/
         loginViewModel.smsCodeObserver.observe(this, Observer{
             if(it?.yes()==true)
             {
@@ -158,7 +143,7 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>(), SocialLoginControl.So
                     alipayId=it.data.user_id
                     var verCode=""
                     logd("支付宝授权成功 ${it.data.user_id}")
-                    loginViewModel.login(resources.getString(R.string.youzan_clientId),loginType,phone,verKey,verCode,weChatId,alipayId)
+                    loginViewModel.login(resources.getString(R.string.youzan_clientId),it.data.nick_name,it.data.avatar,loginType,phone,verKey,verCode,weChatId,alipayId)
                 }
                 else
                 {
@@ -287,7 +272,7 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>(), SocialLoginControl.So
         {
             weChatId=p0.uid
             var verCode=""
-            loginViewModel.login(resources.getString(R.string.youzan_clientId),loginType,phone,verKey,verCode,weChatId,alipayId)
+            loginViewModel.login(resources.getString(R.string.youzan_clientId),p0.getNickName(),p0.getHeadURL(),loginType,phone,verKey,verCode,weChatId,alipayId)
         }
         else
         {

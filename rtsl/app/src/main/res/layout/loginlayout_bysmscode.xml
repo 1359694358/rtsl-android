@@ -15,7 +15,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="@dimen/dimen38"
-            android:layout_marginTop="@dimen/dimen26"
+            android:layout_marginTop="@dimen/dimen42"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Hi～\n欢迎来到润泰丝路"
@@ -23,6 +23,7 @@
             android:textSize="@dimen/dimen26" />
 
         <EditText
+            android:textCursorDrawable="@drawable/rstl_edit_cursor"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:id="@+id/phoneInput"
@@ -53,6 +54,7 @@
             android:background="#E5E5E5"/>
 
         <EditText
+            android:textCursorDrawable="@drawable/rstl_edit_cursor"
             app:layout_constraintEnd_toStartOf="@+id/getSmsCode"
             android:id="@+id/smsCodeInput"
             android:digits="0123456789"

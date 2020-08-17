@@ -59,7 +59,10 @@ class WebViewActivity: BaseActivity<ActivityWebviewBinding>()
         if(loginBean.isLogin) {
             loginViewMode.getYouZanToken(
                 loginBean.id,
-                resources.getString(R.string.youzan_clientId)
+                resources.getString(R.string.youzan_clientId),
+                loginBean.nickName,
+                loginBean.avatar,
+                loginBean.telephone
             )
             return true
         }

@@ -43,7 +43,7 @@ class LoginViewModel: ViewModel()
 //channel_type	是	number	登录方式 0：手机； 1：微信；2：支付宝
 //verKey	否	string	验证码标识，手机登录时
 //verCode	否	string	验证码，手机登录时
-    fun login(youzanClientId:String,channel_type:Int= LoginType.Mobile, telephone:String="", verKey:String="", verCode:String="", wx_id:String="", zfb_id:String="")
+    fun login(youzanClientId:String,nickName:String?,avatar:String?,channel_type:Int= LoginType.Mobile, telephone:String="", verKey:String="", verCode:String="", wx_id:String="", zfb_id:String="")
     {
         var loginEntity=LoginEntity(channel_type, telephone, verKey, verCode, wx_id, zfb_id)
         AppApi.serverApi.login(loginEntity).compose(TransUtils.jsonTransform(LoginResultBean::class.java))
@@ -51,7 +51,10 @@ class LoginViewModel: ViewModel()
                     var observable: Observable<JSONObject>?=null
                     if(it.yes())
                     {
-                        val youzEntity= YouZanSysEntity(it.data.id,youzanClientId)
+                        it.data.avatar=avatar
+                        it.data.nickName=nickName
+                        it.data.telephone=telephone
+                        val youzEntity= YouZanSysEntity(it.data.id,youzanClientId,avatar,nickName,telephone)
                         observable= AppApi.serverApi.sysYouZanUser(youzEntity)
                     }
                     loginObserver.postValue(it)
@@ -71,9 +74,9 @@ class LoginViewModel: ViewModel()
                 )
     }
 
-    fun getYouZanToken(userId:String,youzanClientId:String)
+    fun getYouZanToken(userId:String,youzanClientId:String,nickName:String?,avatar:String?,telephone:String?)
     {
-        val youzEntity= YouZanSysEntity(userId,youzanClientId)
+        val youzEntity= YouZanSysEntity(userId,youzanClientId,avatar,nickName)
         AppApi.serverApi.sysYouZanUser(youzEntity).compose(TransUtils.jsonTransform(YouZanTokenBean::class.java))
                 .compose(TransUtils.schedulersTransformer())
                 .subscribe(
