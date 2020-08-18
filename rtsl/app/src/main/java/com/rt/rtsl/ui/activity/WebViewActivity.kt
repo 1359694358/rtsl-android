@@ -7,9 +7,15 @@ import android.graphics.PixelFormat
 import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
+import com.pgyersdk.update.DownloadFileListener
+import com.pgyersdk.update.PgyUpdateManager
+import com.pgyersdk.update.UpdateManagerListener
+import com.pgyersdk.update.javabean.AppBean
 import com.rt.rtsl.bean.result.LoginResultBean
+import com.rt.rtsl.utils.PgyUpdate
 import com.rt.rtsl.utils.ToastUtil
 import com.rt.rtsl.utils.logd
 import com.rt.rtsl.utils.startActivity
@@ -26,6 +32,8 @@ import com.youzan.androidsdk.YouzanToken
 import com.youzan.androidsdk.event.AbsAuthEvent
 import com.youzan.androidsdk.event.AbsChooserEvent
 import org.jetbrains.anko.startActivity
+import java.io.File
+import java.lang.Exception
 
 
 class WebViewActivity: BaseActivity<ActivityWebviewBinding>()
@@ -52,17 +60,19 @@ class WebViewActivity: BaseActivity<ActivityWebviewBinding>()
         contentBinding.toolbarBindingView.titleText.paint.isFakeBoldText=true
         addObsever()
         sysUserToken()
+        PgyUpdate.updateCheck(this)
     }
+
 
     fun sysUserToken(): Boolean {
         var loginBean=LoginResultBean.LoginResult.getLoginResult()
         if(loginBean.isLogin) {
             loginViewMode.getYouZanToken(
-                loginBean.id,
-                resources.getString(R.string.youzan_clientId),
-                loginBean.nickName,
-                loginBean.avatar,
-                loginBean.telephone
+                    loginBean.id,
+                    resources.getString(R.string.youzan_clientId),
+                    loginBean.nickName,
+                    loginBean.avatar,
+                    loginBean.telephone
             )
             return true
         }
@@ -73,8 +83,8 @@ class WebViewActivity: BaseActivity<ActivityWebviewBinding>()
     {
         contentBinding.mView.setWebChromeClient(object : WebChromeClient() {
             override fun onShowCustomView(
-                view: View?,
-                customViewCallback: IX5WebChromeClient.CustomViewCallback
+                    view: View?,
+                    customViewCallback: IX5WebChromeClient.CustomViewCallback
             ) {
                 super.onShowCustomView(view, customViewCallback)
                 customViewCallback.onCustomViewHidden()
@@ -87,13 +97,13 @@ class WebViewActivity: BaseActivity<ActivityWebviewBinding>()
                 }
             }
         })
-       /* contentBinding.mView.setWebViewClient(object: WebViewClient()
-        {
-            override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-                contentBinding.mView.loadUrl(url)
-                return true;
-            }
-        })*/
+        /* contentBinding.mView.setWebViewClient(object: WebViewClient()
+         {
+             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+                 contentBinding.mView.loadUrl(url)
+                 return true;
+             }
+         })*/
         if(TextUtils.isEmpty(url))
         {
             url=resources.getString(R.string.youzan_storeurl)
@@ -177,6 +187,6 @@ class WebViewActivity: BaseActivity<ActivityWebviewBinding>()
     val Interval=3000
     var time = System.currentTimeMillis()-Interval
     override fun onBackPressed() {
-       backHandle()
+        backHandle()
     }
 }

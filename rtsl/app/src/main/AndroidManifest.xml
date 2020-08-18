@@ -38,6 +38,12 @@
         <meta-data
             android:name="android.notch_support"
             android:value="true" />
+
+        <meta-data
+            android:name="PGYER_APPID"
+            android:value="2e31ee14de0ee5bc9e5cf5c2219437b4" >
+        </meta-data>
+
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />

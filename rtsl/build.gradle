@@ -17,6 +17,7 @@ buildscript {
 allprojects {
     repositories {
         google()
+        maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
         jcenter { url "https://jcenter.bintray.com/" }
         maven {url 'https://dl.bintray.com/youzanyun/maven/'}
     }

@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.multidex.MultiDexApplication
 import com.mediacloud.app.share.SocialShareControl
+import com.pgyersdk.crash.PgyCrashManager
 import com.rt.rtsl.utils.AssetsManager
 import com.rt.rtsl.utils.ExceptionHandler
 import com.rt.rtsl.utils.FileUtil
@@ -32,7 +33,9 @@ class App: MultiDexApplication(), ViewModelStoreOwner {
         super.onCreate()
         doAsync {
             ExceptionHandler.getInstance().init(this@App)
-
+            ExceptionHandler.getInstance().setCrashCallBack {
+                PgyCrashManager.reportCaughtException(it as java.lang.Exception?)
+            }
             //
             var use_terms=this@App.resources.getString(R.string.use_terms)
             var cacheDir=this@App.cacheDir.absolutePath
