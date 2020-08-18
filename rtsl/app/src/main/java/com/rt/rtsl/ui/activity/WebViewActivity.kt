@@ -123,7 +123,7 @@ class WebViewActivity: BaseActivity<ActivityWebviewBinding>()
 
                 // 这里注意调用顺序。先传递给sdk，再刷新view
                 YouzanSDK.sync(getApplicationContext(), token);
-                contentBinding.mView.loadUrl(url)
+                contentBinding.mView.sync(token)
             }
             else
             {

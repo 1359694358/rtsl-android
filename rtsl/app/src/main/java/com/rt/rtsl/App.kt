@@ -31,6 +31,8 @@ class App: MultiDexApplication(), ViewModelStoreOwner {
 
     override fun onCreate() {
         super.onCreate()
+        YouzanSDK.init(this@App, resources.getString(R.string.youzan_clientId),YouZanSDKX5Adapter())
+        YouzanPreloader.preloadHtml(this@App, resources.getString(R.string.youzan_storeurl));
         doAsync {
             ExceptionHandler.getInstance().init(this@App)
             ExceptionHandler.getInstance().setCrashCallBack {
@@ -56,8 +58,6 @@ class App: MultiDexApplication(), ViewModelStoreOwner {
             {
                 e.printStackTrace()
             }
-            YouzanSDK.init(this@App, resources.getString(R.string.youzan_clientId),YouZanSDKX5Adapter())
-            YouzanPreloader.preloadHtml(this@App, resources.getString(R.string.youzan_storeurl));
 
              val cb: QbSdk.PreInitCallback = object : QbSdk.PreInitCallback {
                 override fun onViewInitFinished(arg0: Boolean) {

@@ -56,7 +56,8 @@ android {
 
         debug {
             signingConfig signingConfigs.release
-            buildConfigField "String","Host",'"http://www.huimiao.wang"'//签到任务接口
+//            buildConfigField "String","Host",'"http://www.huimiao.wang"'//签到任务接口
+            buildConfigField "String","Host",'"https://m.runtae.com"'//签到任务接口
         }
     }
     compileOptions {
