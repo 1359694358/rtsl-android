@@ -149,7 +149,9 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>(), SocialLoginControl.So
                     alipayId=it.data.user_id
                     var verCode=""
                     logd("支付宝授权成功 ${it.data.user_id}")
-                    loginViewModel.login(resources.getString(R.string.youzan_clientId),it.data.nick_name,it.data.avatar,loginType,phone,verKey,verCode,weChatId,alipayId)
+//                    loginViewModel.login(resources.getString(R.string.youzan_clientId),it.data.nick_name,it.data.avatar,loginType,phone,verKey,verCode,weChatId,alipayId)
+                    startActivity(ActivityBindMobile::class.java)
+                    finish()
                 }
                 else
                 {
