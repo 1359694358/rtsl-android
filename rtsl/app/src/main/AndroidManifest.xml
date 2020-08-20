@@ -58,21 +58,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:name="com.rt.rtsl.ui.activity.ActivityLogin"
             android:configChanges="locale|layoutDirection|orientation|keyboardHidden|navigation|screenSize"
             android:windowSoftInputMode="adjustPan"
             />
         <activity
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:name="com.rt.rtsl.ui.activity.ActivityBindMobile"
             android:configChanges="locale|layoutDirection|orientation|keyboardHidden|navigation|screenSize"
             android:windowSoftInputMode="adjustPan"
             />
         <activity
-            android:launchMode="singleTask"
             android:name="com.rt.rtsl.ui.activity.OfficeFileViewActivity"
             android:configChanges="locale|layoutDirection|orientation|keyboardHidden|navigation|screenSize"
             />

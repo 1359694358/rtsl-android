@@ -185,6 +185,16 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>(), SocialLoginControl.So
 
     }
 
+    override fun onBackPressed() {
+        loginViewModel.youzanTokenObserver.postValue(null)
+        super.onBackPressed()
+    }
+
+    override fun backHandle() {
+        loginViewModel.youzanTokenObserver.postValue(null)
+        super.backHandle()
+    }
+
     fun invokeGetInvalidataNum()
     {
         hideKeyBroad()

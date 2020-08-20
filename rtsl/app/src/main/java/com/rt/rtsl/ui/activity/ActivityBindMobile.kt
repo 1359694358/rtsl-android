@@ -108,7 +108,7 @@ class ActivityBindMobile: BaseActivity<ActivityBindmobileBinding>() {
             }
             else
             {
-                ToastUtil.show(this,"绑定手机号失败 ${it?.msg?:""}")
+                ToastUtil.show(this,"${it?.msg?:"绑定手机号失败"}")
             }
         })
         loginViewModel.smsCodeObserver.observe(this, Observer{
@@ -127,6 +127,14 @@ class ActivityBindMobile: BaseActivity<ActivityBindmobileBinding>() {
 
         contentBinding.smsCodeLogin.phoneInput.requestFocus()
 
+    }
+    override fun onBackPressed() {
+        loginViewModel.youzanTokenObserver.postValue(null)
+        super.onBackPressed()
+    }
+    override fun backHandle() {
+        loginViewModel.youzanTokenObserver.postValue(null)
+        super.backHandle()
     }
 
     inner class CountDown(millisInFuture: Long) : CountDownTimer(millisInFuture, 1000) {
