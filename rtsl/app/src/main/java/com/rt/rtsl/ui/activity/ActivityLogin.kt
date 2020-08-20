@@ -9,11 +9,13 @@ import android.os.Handler
 import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import com.mediacloud.app.share.SocialLoginControl
 import com.mediacloud.app.share.socialuserinfo.SocialUserInfo
 import com.permissionx.guolindev.PermissionX
 import com.qmuiteam.qmui.widget.QMUILoadingView
+import com.rt.rtsl.bean.request.LoginEntity
 import com.rt.rtsl.bean.request.LoginType
 import com.rt.rtsl.bean.result.LoginResultBean
 import com.rt.rtsl.ui.widget.*
@@ -51,6 +53,7 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>(), SocialLoginControl.So
         countDownTimer = CountDown(60 * 1000)
     }
 
+    var socialLoginEntity:LoginEntity?=null
     fun addLoginListener()
     {
         contentBinding.smsCodeLogin.getSmsCode.setOnClickListener {
@@ -95,9 +98,17 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>(), SocialLoginControl.So
             contentBinding.loadingView.visibility=View.GONE
             if(it?.yes()==true)
             {
-                logd("登录成功")
-                LoginResultBean.LoginResult.setLoginResult(it.data)
-                finish()
+                if (it?.code==40001&&socialLoginEntity!=null)
+                {
+                    ActivityBindMobile.startActivity(this,socialLoginEntity!!)
+                    finish()
+                }
+                else
+                {
+                    logd("登录成功")
+                    LoginResultBean.LoginResult.setLoginResult(it.data)
+                    finish()
+                }
             }
             else
             {
@@ -149,9 +160,7 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>(), SocialLoginControl.So
                     alipayId=it.data.user_id
                     var verCode=""
                     logd("支付宝授权成功 ${it.data.user_id}")
-//                    loginViewModel.login(resources.getString(R.string.youzan_clientId),it.data.nick_name,it.data.avatar,loginType,phone,verKey,verCode,weChatId,alipayId)
-                    startActivity(ActivityBindMobile::class.java)
-                    finish()
+                    socialLoginEntity=loginViewModel.login(resources.getString(R.string.youzan_clientId),it.data.nick_name,it.data.avatar,loginType,phone,verKey,verCode,weChatId,alipayId)
                 }
                 else
                 {
@@ -211,26 +220,18 @@ class ActivityLogin: BaseActivity<ActivityLoginBinding>(), SocialLoginControl.So
         ToastUtil.show(this,"授权登录失败")
     }
 
+    var userInfo :SocialUserInfo?=null
     override fun getSocialUserInfoComplete(p0: SocialUserInfo?)
     {
+        if(userInfo==p0)
+            return
+        userInfo=p0;
         logd("getSocialUserInfoComplete")
         if(p0!=null)
         {
             weChatId=p0.uid
-           /* var verCode=""
-            loginViewModel.login(resources.getString(R.string.youzan_clientId),p0.getNickName(),p0.getHeadURL(),loginType,phone,verKey,verCode,weChatId,alipayId)*/
-
-            var mobileInfo=readAny<String>(weChatId)
-
-            if(mobileInfo?.isNotEmpty() == true)
-            {
-
-            }
-            else
-            {
-                startActivity(ActivityBindMobile::class.java)
-                finish()
-            }
+            var verCode=""
+            socialLoginEntity=loginViewModel.login(resources.getString(R.string.youzan_clientId),p0.getNickName(),p0.getHeadURL(),loginType,phone,verKey,verCode,weChatId,alipayId)
         }
         else
         {

@@ -67,6 +67,7 @@ public class LoginResultBean extends BaseResultBean<LoginResultBean.LoginResult>
         public String accessToken;
         public String verKey;
         public String verCode;
+        public YouZanTokenBean yzLoginResponse;
 
         public final boolean isLogin()
         {

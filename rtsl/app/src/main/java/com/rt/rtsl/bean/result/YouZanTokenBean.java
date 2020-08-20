@@ -3,10 +3,39 @@ package com.rt.rtsl.bean.result;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.gson.annotations.SerializedName;
 
-public class YouZanTokenBean extends BaseResultBean<BaseResultBean<YouZanTokenBean.YouZanToken>>
+public class YouZanTokenBean extends BaseResultBean<YouZanTokenBean.YouZanToken> implements Parcelable
 {
+    public YouZanTokenBean()
+    {
+    }
+
+    protected YouZanTokenBean(Parcel in)
+    {
+        data=in.readParcelable(YouZanToken.class.getClassLoader());
+    }
+
+    public static final Creator<YouZanTokenBean> CREATOR = new Creator<YouZanTokenBean>() {
+        @Override
+        public YouZanTokenBean createFromParcel(Parcel in) {
+            return new YouZanTokenBean(in);
+        }
+
+        @Override
+        public YouZanTokenBean[] newArray(int size) {
+            return new YouZanTokenBean[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeParcelable(data,i);
+    }
 
     public static class YouZanToken implements Parcelable
     {

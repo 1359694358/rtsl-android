@@ -1,13 +1,13 @@
 package com.rt.rtsl.ui.activity
 
-import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.TextUtils
 import android.view.View
 import androidx.lifecycle.Observer
-import com.mediacloud.app.share.SocialLoginControl
+import com.rt.rtsl.bean.request.LoginEntity
 import com.rt.rtsl.bean.request.LoginType
 import com.rt.rtsl.bean.result.LoginResultBean
 import com.rt.rtsl.ui.widget.*
@@ -20,6 +20,15 @@ class ActivityBindMobile: BaseActivity<ActivityBindmobileBinding>() {
     override fun getLayoutResId(): Int {
         return R.layout.activity_bindmobile
     }
+    companion object
+    {
+        fun startActivity(context:Context,socialLoginEntity:LoginEntity)
+        {
+            var intent =Intent(context,ActivityBindMobile::class.java)
+            intent.putExtra(Intent.ACTION_ATTACH_DATA,socialLoginEntity)
+            context.startActivity(intent)
+        }
+    }
     lateinit var countDownTimer: CountDown
     val loginViewModel:LoginViewModel by lazy { getViewModelByApplication(LoginViewModel::class.java) }
     private var loginType=LoginType.Mobile
@@ -27,10 +36,11 @@ class ActivityBindMobile: BaseActivity<ActivityBindmobileBinding>() {
     private var weChatId:String=""
     private var alipayId:String=""
     private var phone=""
-
+    var socialLoginEntity:LoginEntity?=null
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
+        socialLoginEntity=intent.getParcelableExtra(Intent.ACTION_ATTACH_DATA)
         setTitle(R.string.normaltitle)
         addLoginListener()
         countDownTimer = CountDown(60 * 1000)
@@ -74,7 +84,10 @@ class ActivityBindMobile: BaseActivity<ActivityBindmobileBinding>() {
             phone=contentBinding.smsCodeLogin.phoneInput.text.toString();
             var verCode=contentBinding.smsCodeLogin.smsCodeInput.text.toString()
             contentBinding.loadingView.visibility=View.VISIBLE
-            loginViewModel.login(resources.getString(R.string.youzan_clientId),phone,"",loginType,phone,verKey,verCode,weChatId,alipayId)
+            socialLoginEntity?.verCode=verCode
+            socialLoginEntity?.telephone=phone
+            socialLoginEntity?.verKey=verKey
+            loginViewModel.socialLoginBind(socialLoginEntity!!)
         }
 
         loginViewModel.loginObserver.observe(this, Observer
@@ -82,13 +95,20 @@ class ActivityBindMobile: BaseActivity<ActivityBindmobileBinding>() {
             contentBinding.loadingView.visibility=View.GONE
             if(it?.yes()==true)
             {
-                logd("登录成功")
-                LoginResultBean.LoginResult.setLoginResult(it.data)
-                finish()
+                if(it.code==40002)
+                {
+                    ToastUtil.show(this,"绑定手机号失败 ${it?.msg?:""}")
+                }
+                else
+                {
+                    logd("绑定成功")
+                    LoginResultBean.LoginResult.setLoginResult(it.data)
+                    finish()
+                }
             }
             else
             {
-                ToastUtil.show(this,"登录失败 ${it?.msg?:""}")
+                ToastUtil.show(this,"绑定手机号失败 ${it?.msg?:""}")
             }
         })
         loginViewModel.smsCodeObserver.observe(this, Observer{
@@ -108,11 +128,6 @@ class ActivityBindMobile: BaseActivity<ActivityBindmobileBinding>() {
         contentBinding.smsCodeLogin.phoneInput.requestFocus()
 
     }
-
-   /* override fun onBackPressed() {
-        super.onBackPressed()
-        backHandle()
-    }*/
 
     inner class CountDown(millisInFuture: Long) : CountDownTimer(millisInFuture, 1000) {
 
@@ -145,11 +160,5 @@ class ActivityBindMobile: BaseActivity<ActivityBindmobileBinding>() {
             contentBinding.smsCodeLogin.getSmsCode.isClickable = true
         }
 
-    }
-
-
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
     }
 }

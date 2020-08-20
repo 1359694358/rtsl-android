@@ -33,6 +33,9 @@ interface ServerApi
 
     @POST("api/ap_user/alipayAuth")
     fun alipayAuth(@Body authEntoty: AlipayAuthEntoty):Observable<JSONObject>
+
+    @POST("api/ap_user/bindPhone")
+    fun socialLoginBind(@Body loginEntity: LoginEntity):Observable<JSONObject>
 }
 
 object AppApi
