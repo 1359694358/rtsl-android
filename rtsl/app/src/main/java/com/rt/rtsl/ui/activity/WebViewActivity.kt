@@ -31,6 +31,7 @@ import com.youzan.androidsdk.YouzanSDK
 import com.youzan.androidsdk.YouzanToken
 import com.youzan.androidsdk.event.AbsAuthEvent
 import com.youzan.androidsdk.event.AbsChooserEvent
+import com.youzan.x5web.YZWebSDK
 import org.jetbrains.anko.startActivity
 import java.io.File
 import java.lang.Exception
@@ -115,6 +116,7 @@ class WebViewActivity: BaseActivity<ActivityWebviewBinding>()
             {
                 logd("登录成功 获取到有赞token")
                 YouzanSDK.userLogout(this@WebViewActivity);
+                contentBinding.mView.clearCache(true);
                 //调用login接口, 获取数据, 组装成YouzanToken, 回传给SDK
                 var token =  YouzanToken()
                 token.cookieKey = it.data.cookieKey
