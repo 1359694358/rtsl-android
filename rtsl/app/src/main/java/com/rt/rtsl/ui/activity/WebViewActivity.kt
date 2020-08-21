@@ -116,7 +116,6 @@ class WebViewActivity: BaseActivity<ActivityWebviewBinding>()
             {
                 logd("登录成功 获取到有赞token")
                 YouzanSDK.userLogout(this@WebViewActivity);
-                contentBinding.mView.clearCache(true);
                 //调用login接口, 获取数据, 组装成YouzanToken, 回传给SDK
                 var token =  YouzanToken()
                 token.cookieKey = it.data.cookieKey
