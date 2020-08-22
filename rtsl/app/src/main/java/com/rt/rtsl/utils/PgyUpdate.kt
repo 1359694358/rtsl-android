@@ -18,7 +18,8 @@ object PgyUpdate
 {
     fun updateCheck(activity:Activity)
     {
-        var versionName=activity.packageManager.getPackageInfo(activity.packageName,0).versionName
+        var versionName=activity.packageManager.getPackageInfo(activity.packageName,0).versionName.replace(".","").toInt()
+        logd("versionName:$versionName")
         var pgyUpdateBuilder= PgyUpdateManager.Builder()
         var updateListener:(autoDownload:Boolean)->Unit=
         {autoDownload->
@@ -85,7 +86,7 @@ object PgyUpdate
             .compose(TransUtils.jsonTransform(UpdateAppResultBean::class.java))
             .subscribe(
                 {
-                    if(it.yes() && versionName != it.data?.version&&it.data?.url?.isNotEmpty()==true)
+                    if(it.yes() && versionName< it.data?.version?.replace(".","")?.toInt()?:0&&it.data?.url?.isNotEmpty()==true)
                     {
                         logd("用自己服务器的下载地址${it.data?.url}")
                         updateListener(false)
