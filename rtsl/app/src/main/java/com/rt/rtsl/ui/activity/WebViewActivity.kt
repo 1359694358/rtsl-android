@@ -66,7 +66,7 @@ class WebViewActivity: BaseActivity<ActivityWebviewBinding>()
 
 
     fun sysUserToken(): Boolean {
-        var loginBean=LoginResultBean.LoginResult.getLoginResult()
+       /* var loginBean=LoginResultBean.LoginResult.getLoginResult()
         if(loginBean.isLogin) {
             loginViewMode.getYouZanToken(
                     loginBean.id,
@@ -76,7 +76,7 @@ class WebViewActivity: BaseActivity<ActivityWebviewBinding>()
                     loginBean.telephone
             )
             return true
-        }
+        }*/
         return false
     }
 

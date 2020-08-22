@@ -10,15 +10,12 @@ import io.reactivex.plugins.RxJavaPlugins
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
 import java.util.concurrent.TimeUnit
 import javax.net.ssl.X509TrustManager
 import io.reactivex.Observable
 import okhttp3.Request
 import org.json.JSONObject
-import retrofit2.http.Body
+import retrofit2.http.*
 
 interface ServerApi
 {
@@ -36,12 +33,15 @@ interface ServerApi
 
     @POST("api/ap_user/bindPhone")
     fun socialLoginBind(@Body loginEntity: LoginEntity):Observable<JSONObject>
+
+    @GET("api/ap_user/getAppVersion")
+    fun checkUpdate():Observable<JSONObject>
 }
 
 object AppApi
 {
-    var ReadTimeOut = 500L
-    var ConnectTimeOut = 500L
+    var ReadTimeOut = 5L
+    var ConnectTimeOut = 5L
     //服务器接口地址修改就改这
 //    val Host="https://m.runtae.com"
 //    val Host="http://www.huimiao.wang"
