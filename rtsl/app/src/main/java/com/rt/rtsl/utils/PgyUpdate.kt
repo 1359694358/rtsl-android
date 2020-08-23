@@ -16,39 +16,40 @@ import java.lang.Exception
 
 object PgyUpdate
 {
+    private var isForced="0";
     fun updateCheck(activity:Activity)
     {
         var versionName=activity.packageManager.getPackageInfo(activity.packageName,0).versionName.replace(".","").toInt()
         logd("versionName:$versionName")
         var pgyUpdateBuilder= PgyUpdateManager.Builder()
         var updateListener:(autoDownload:Boolean)->Unit=
-        {autoDownload->
-            pgyUpdateBuilder.setUpdateManagerListener(object: UpdateManagerListener
-            {
-                override fun onUpdateAvailable(appBean: AppBean?)
+            {autoDownload->
+                pgyUpdateBuilder.setUpdateManagerListener(object: UpdateManagerListener
                 {
-                    Log.d("Pgy", "onUpdateAvailable: $appBean")
-                    if(autoDownload)
+                    override fun onUpdateAvailable(appBean: AppBean?)
                     {
-                        appBean?.let {
-                            logd("用蒲公英的下载地址${appBean.downloadURL}")
-                            PgyUpdateManager.downLoadApk(appBean.downloadURL);
+                        Log.d("Pgy", "onUpdateAvailable: $appBean")
+                        if(autoDownload)
+                        {
+                            appBean?.let {
+                                logd("用蒲公英的下载地址${appBean.downloadURL}")
+                                PgyUpdateManager.downLoadApk(appBean.downloadURL);
+                            }
                         }
                     }
-                }
 
-                override fun checkUpdateFailed(e: Exception?)
-                {
-                    Log.d("Pgy", "checkUpdateFailed:${e} ")
-                }
+                    override fun checkUpdateFailed(e: Exception?)
+                    {
+                        Log.d("Pgy", "checkUpdateFailed:${e} ")
+                    }
 
-                override fun onNoUpdateAvailable()
-                {
-                    Log.d("Pgy", "onNoUpdateAvailable")
-                }
+                    override fun onNoUpdateAvailable()
+                    {
+                        Log.d("Pgy", "onNoUpdateAvailable")
+                    }
 
-            })
-        }
+                })
+            }
         var downloadListener:()->Unit={
             pgyUpdateBuilder.setDownloadFileListener(object : DownloadFileListener
             {
@@ -68,11 +69,20 @@ object PgyUpdate
                         dialogBuilder.setTitle("更新提示")
                         dialogBuilder.setMessage("系统检测到新的版本，点击确认进行安装")
                         dialogBuilder.addAction("确定") { dialog, _ ->
-                            dialog.dismiss()
+                            if("1"!=isForced)
+                                dialog.dismiss()
                             PgyUpdateManager.installApk(file)
                         }
-                        dialogBuilder.addAction("取消") { dialog, _ ->
-                            dialog.dismiss()
+                        if("1"!=isForced)
+                        {
+                            dialogBuilder.addAction("取消") { dialog, _ ->
+                                dialog.dismiss()
+                            }
+                        }
+                        else
+                        {
+                            dialogBuilder.setCanceledOnTouchOutside(false)
+                            dialogBuilder.setCancelable(false)
                         }
                         dialogBuilder.show()
                     };
@@ -89,6 +99,7 @@ object PgyUpdate
                     if(it.yes() && versionName< it.data?.version?.replace(".","")?.toInt()?:0&&it.data?.url?.isNotEmpty()==true)
                     {
                         logd("用自己服务器的下载地址${it.data?.url}")
+                        isForced=it.data.isForced
                         updateListener(false)
                         downloadListener()
                         pgyUpdateBuilder.register()
@@ -101,9 +112,9 @@ object PgyUpdate
                         pgyUpdateBuilder.register()
                     }
                 }
-            ,
+                ,
                 {
-                    ToastUtil.show(activity,"$it")
+                    logd("$it")
                     updateListener(true)
                     downloadListener()
                     pgyUpdateBuilder.register()
