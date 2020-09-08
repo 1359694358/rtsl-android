@@ -29,5 +29,17 @@
             android:src="@mipmap/app_topback"
             android:layout_width="@dimen/dimen40"
             android:layout_height="@dimen/dimen40"/>
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/login_out"
+            android:textColor="#333333"
+            android:layout_marginRight="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="退出登录"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

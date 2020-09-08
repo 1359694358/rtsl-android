@@ -1,29 +1,28 @@
 package com.rt.rtsl.ui.activity
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.PixelFormat
 import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
-import com.pgyersdk.update.DownloadFileListener
-import com.pgyersdk.update.PgyUpdateManager
-import com.pgyersdk.update.UpdateManagerListener
-import com.pgyersdk.update.javabean.AppBean
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target
 import com.rt.rtsl.bean.result.LoginResultBean
-import com.rt.rtsl.utils.PgyUpdate
-import com.rt.rtsl.utils.ToastUtil
-import com.rt.rtsl.utils.logd
-import com.rt.rtsl.utils.startActivity
+import com.rt.rtsl.utils.*
 import com.rt.rtsl.vm.LoginViewModel
 import com.rtsl.app.android.R
 import com.rtsl.app.android.databinding.ActivityWebviewBinding
-import com.tencent.smtt.export.external.extension.proxy.ProxyWebViewClientExtension
-import com.tencent.smtt.export.external.extension.proxy.X5ProxyWebViewClientExtension
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient
 import com.tencent.smtt.sdk.WebChromeClient
 import com.tencent.smtt.sdk.WebView
@@ -31,10 +30,9 @@ import com.youzan.androidsdk.YouzanSDK
 import com.youzan.androidsdk.YouzanToken
 import com.youzan.androidsdk.event.AbsAuthEvent
 import com.youzan.androidsdk.event.AbsChooserEvent
-import com.youzan.x5web.YZWebSDK
+import com.youzan.androidsdk.event.AbsShareEvent
+import com.youzan.androidsdk.model.goods.GoodsShareModel
 import org.jetbrains.anko.startActivity
-import java.io.File
-import java.lang.Exception
 
 
 class WebViewActivity: BaseActivity<ActivityWebviewBinding>()
@@ -62,6 +60,11 @@ class WebViewActivity: BaseActivity<ActivityWebviewBinding>()
         addObsever()
         sysUserToken()
         PgyUpdate.updateCheck(this)
+        contentBinding.toolbarBindingView.loginOut.setOnClickListener {
+            it.visibility = View.GONE
+            YouzanSDK.userLogout(this@WebViewActivity)
+            contentBinding.mView.loadUrl(resources.getString(R.string.youzan_storeurl))
+        }
     }
 
 
@@ -80,6 +83,7 @@ class WebViewActivity: BaseActivity<ActivityWebviewBinding>()
         return false
     }
 
+    @SuppressLint("CheckResult")
     fun addObsever()
     {
         contentBinding.mView.setWebChromeClient(object : WebChromeClient() {
@@ -94,6 +98,11 @@ class WebViewActivity: BaseActivity<ActivityWebviewBinding>()
             override fun onReceivedTitle(p0: WebView?, p1: String?) {
                 super.onReceivedTitle(p0, p1)
                 p1?.let {
+                    if(it == "会员主页"){
+                        contentBinding.toolbarBindingView.loginOut.visibility = View.VISIBLE
+                    }else{
+                        contentBinding.toolbarBindingView.loginOut.visibility = View.GONE
+                    }
                     setTitle(it)
                 }
             }
@@ -133,6 +142,51 @@ class WebViewActivity: BaseActivity<ActivityWebviewBinding>()
         contentBinding.mView.subscribe(object : AbsChooserEvent() {
             override fun call(p0: Context?, p1: Intent?, p2: Int) {
                 startActivityForResult(p1,p2)
+            }
+        })
+
+        contentBinding.mView.subscribe(object : AbsShareEvent() {
+            override fun call(p0: Context?, p1: GoodsShareModel?) {
+                Glide.with(this@WebViewActivity).asBitmap().listener(object : RequestListener<Bitmap> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Bitmap>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        WxShareUtils.INSTANCE.shareWebPage(
+                            this@WebViewActivity,
+                            SendMessageToWX.Req.WXSceneSession,
+                            p1?.link,
+                            p1?.title,
+                            p1?.desc,
+                            null
+                        )
+                        return true
+                    }
+
+                    override fun onResourceReady(
+                        resource: Bitmap?,
+                        model: Any?,
+                        target: Target<Bitmap>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        WxShareUtils.INSTANCE.shareWebPage(
+                            this@WebViewActivity,
+                            SendMessageToWX.Req.WXSceneSession,
+                            p1?.link,
+                            p1?.title,
+                            p1?.desc,
+                            resource
+                        )
+                        return true
+                    }
+
+                })
+                    .load(p1?.imgUrl)
+                    .apply(RequestOptions.centerCropTransform())
+                    .submit()
             }
         })
         contentBinding.mView.subscribe(object :AbsAuthEvent()
